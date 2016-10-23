@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+# create directory to mount file system image on:
+# `mkdir ./mnt`
+# `mount $1 on ./mnt`
+#
+# call java on directory ./mnt
+#
+#
+#
+
