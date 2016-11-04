@@ -1,0 +1,17 @@
+ALL COMMANDS for xTractor:
+    about Events:
+        EVENT DATE dd/mm/yy (Specifies events for a given date)
+        EVENT WINDOWS       (Events specific to Windows Logs)
+        EVENT APPSNSERVICES (Events specific to Applications and Services)
+        
+    about Registry:
+        REG NETWORK         (Info about Networks on registry)
+        REG SYSTEM          (Info about the system - OS, PC Name, ...)
+        REG TIMEZONE        (Info relative to the Timezone)
+        REG SHARES          (Info about shared resources, disk volumes, ...)
+        REG DEVICES         (Info about mounted devices, volumes, ...)
+        REG USERS           (Info about users - Names, last login, ...)
+    others:
+        HELP                (Show exactly this)
+        EXIT                (Exit the tool)
+-------------------
