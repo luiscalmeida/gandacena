@@ -1,0 +1,55 @@
+have_header: checking for hivex.h... -------------------- yes
+
+"gcc -o conftest -I/usr/include/x86_64-linux-gnu/ruby-2.3.0 -I/usr/include/ruby-2.3.0/ruby/backward -I/usr/include/ruby-2.3.0 -I/root/Downloads/hivex-1.3.13/hivex-1.3.13/ruby/ext/hivex -I/root/Downloads/hivex-1.3.13/hivex-1.3.13/ruby/../lib -Wdate-time -D_FORTIFY_SOURCE=2   -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -fPIC conftest.c  -L. -L/usr/lib/x86_64-linux-gnu -L/root/Downloads/hivex-1.3.13/hivex-1.3.13/ruby/../lib/.libs -L. -Wl,-z,relro -Wl,-z,now -fstack-protector -rdynamic -Wl,-export-dynamic     -lruby-2.3  -lpthread -lgmp -ldl -lcrypt -lm   -lc"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main(int argc, char **argv)
+4: {
+5:   return 0;
+6: }
+/* end */
+
+"gcc -E -I/usr/include/x86_64-linux-gnu/ruby-2.3.0 -I/usr/include/ruby-2.3.0/ruby/backward -I/usr/include/ruby-2.3.0 -I/root/Downloads/hivex-1.3.13/hivex-1.3.13/ruby/ext/hivex -I/root/Downloads/hivex-1.3.13/hivex-1.3.13/ruby/../lib -Wdate-time -D_FORTIFY_SOURCE=2   -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -fPIC  conftest.c -o conftest.i"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <hivex.h>
+/* end */
+
+--------------------
+
+have_library: checking for hivex_open() in -lhivex... -------------------- yes
+
+"gcc -o conftest -I/usr/include/x86_64-linux-gnu/ruby-2.3.0 -I/usr/include/ruby-2.3.0/ruby/backward -I/usr/include/ruby-2.3.0 -I/root/Downloads/hivex-1.3.13/hivex-1.3.13/ruby/ext/hivex -I/root/Downloads/hivex-1.3.13/hivex-1.3.13/ruby/../lib -Wdate-time -D_FORTIFY_SOURCE=2   -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -fPIC conftest.c  -L. -L/usr/lib/x86_64-linux-gnu -L/root/Downloads/hivex-1.3.13/hivex-1.3.13/ruby/../lib/.libs -L. -Wl,-z,relro -Wl,-z,now -fstack-protector -rdynamic -Wl,-export-dynamic     -lruby-2.3 -lhivex  -lpthread -lgmp -ldl -lcrypt -lm   -lc"
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <hivex.h>
+ 4: 
+ 5: /*top*/
+ 6: extern int t(void);
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   if (argc > 1000000) {
+10:     printf("%p", &t);
+11:   }
+12: 
+13:   return 0;
+14: }
+15: int t(void) { void ((*volatile p)()); p = (void ((*)()))hivex_open; return !p; }
+/* end */
+
+--------------------
+
+extconf.h is:
+/* begin */
+1: #ifndef EXTCONF_H
+2: #define EXTCONF_H
+3: #define HAVE_HIVEX_H 1
+4: #endif
+/* end */
+

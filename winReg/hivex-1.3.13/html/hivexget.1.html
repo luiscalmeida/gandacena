@@ -1,0 +1,95 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<link rel="stylesheet" href="pod.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#NOTE">NOTE</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+  <li><a href="#AUTHORS">AUTHORS</a></li>
+  <li><a href="#COPYRIGHT">COPYRIGHT</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>hivexget - Get subkey from a Windows Registry binary &quot;hive&quot; file</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code> hivexget hivefile &#39;\Path\To\SubKey&#39;
+
+ hivexget hivefile &#39;\Path\To\SubKey&#39; name</code></pre>
+
+<h1 id="NOTE">NOTE</h1>
+
+<p>This is a low-level tool. For a more convenient way to navigate the Windows Registry in Windows virtual machines, see <a href="http://man.he.net/man1/virt-win-reg">virt-win-reg(1)</a>. For proper regedit formatting, use <a href="http://man.he.net/man1/hivexregedit">hivexregedit(1)</a>.</p>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>This program navigates through a Windows Registry binary &quot;hive&quot; file and extracts <i>either</i> all the (key, value) data pairs stored in that subkey <i>or</i> just the single named data item.</p>
+
+<p>In the first form:</p>
+
+<pre><code> hivexget hivefile &#39;\Path\To\SubKey&#39;</code></pre>
+
+<p><code>hivefile</code> is some Windows Registry binary hive, and <code>\Path\To\Subkey</code> is a path within that hive. <i>NB</i> the path is relative to the top of this hive, and is <i>not</i> the full path as you would use in Windows (eg. <code>HKEY_LOCAL_MACHINE\SYSTEM</code> is not a valid path).</p>
+
+<p>If the subkey exists, then the output lists all data pairs under this subkey, in a format similar to <code>regedit</code> in Windows.</p>
+
+<p>In the second form:</p>
+
+<pre><code> hivexget hivefile &#39;\Path\To\SubKey&#39; name</code></pre>
+
+<p><code>hivefile</code> and path are as above. <code>name</code> is the name of the value of interest (use <code>@</code> for the default value).</p>
+
+<p>The corresponding data item is printed &quot;raw&quot; (ie. no processing or escaping) except:</p>
+
+<ol>
+
+<li><p>If it&#39;s a string we will convert it from Windows UTF-16 to UTF-8, if this conversion is possible. The string is printed with a single trailing newline.</p>
+
+</li>
+<li><p>If it&#39;s a multiple-string value, each string is printed on a separate line.</p>
+
+</li>
+<li><p>If it&#39;s a numeric value, it is printed as a decimal number.</p>
+
+</li>
+</ol>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="http://man.he.net/man3/hivex">hivex(3)</a>, <a href="http://man.he.net/man1/hivexml">hivexml(1)</a>, <a href="http://man.he.net/man1/hivexsh">hivexsh(1)</a>, <a href="http://man.he.net/man1/hivexregedit">hivexregedit(1)</a>, <a href="http://man.he.net/man1/virt-win-reg">virt-win-reg(1)</a>, <a href="http://man.he.net/man3/guestfs">guestfs(3)</a>, <a href="http://libguestfs.org/">http://libguestfs.org/</a>, <a href="http://man.he.net/man1/virt-cat">virt-cat(1)</a>, <a href="http://man.he.net/man1/virt-edit">virt-edit(1)</a>.</p>
+
+<h1 id="AUTHORS">AUTHORS</h1>
+
+<p>Richard W.M. Jones (<code>rjones at redhat dot com</code>)</p>
+
+<h1 id="COPYRIGHT">COPYRIGHT</h1>
+
+<p>Copyright (C) 2009 Red Hat Inc.</p>
+
+<p>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.</p>
+
+<p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</p>
+
+<p>You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.</p>
+
+
+</body>
+
+</html>
+
+

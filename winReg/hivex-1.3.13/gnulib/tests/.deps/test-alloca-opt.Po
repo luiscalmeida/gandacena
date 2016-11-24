@@ -1,0 +1,8 @@
+test-alloca-opt.o: test-alloca-opt.c /usr/include/stdc-predef.h \
+ ../../config.h ../../gnulib/lib/alloca.h
+
+/usr/include/stdc-predef.h:
+
+../../config.h:
+
+../../gnulib/lib/alloca.h:

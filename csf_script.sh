@@ -61,5 +61,8 @@ echo "OFFSET * BYTES(512) = $offset_bytes"
 echo " "
 echo "MOUNTING NTFS.."
 `mount -t ntfs -o ro,loop,offset=$offset_bytes $1 ./mnt/`
-
+cd mnt/Windows/System32/config/
+echo " "
+echo "Now in path: "
+echo `pwd`
 

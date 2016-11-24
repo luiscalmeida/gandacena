@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1480001270 source:/root/Documents/CSF/csf_c/winReg/main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+

@@ -1,0 +1,43 @@
+test-wchar.o: test-wchar.c /usr/include/stdc-predef.h ../../config.h \
+ ../../gnulib/lib/wchar.h /usr/include/features.h \
+ /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+ /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+ /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+ /usr/include/x86_64-linux-gnu/gnu/stubs-64.h /usr/include/wchar.h \
+ ../../gnulib/lib/stdio.h /usr/include/stdio.h \
+ /usr/lib/gcc/x86_64-linux-gnu/6/include/stdarg.h \
+ /usr/include/x86_64-linux-gnu/bits/wchar.h \
+ /usr/lib/gcc/x86_64-linux-gnu/6/include/stddef.h /usr/include/xlocale.h \
+ ../../gnulib/lib/verify.h
+
+/usr/include/stdc-predef.h:
+
+../../config.h:
+
+../../gnulib/lib/wchar.h:
+
+/usr/include/features.h:
+
+/usr/include/x86_64-linux-gnu/sys/cdefs.h:
+
+/usr/include/x86_64-linux-gnu/bits/wordsize.h:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs.h:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
+
+/usr/include/wchar.h:
+
+../../gnulib/lib/stdio.h:
+
+/usr/include/stdio.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/6/include/stdarg.h:
+
+/usr/include/x86_64-linux-gnu/bits/wchar.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/6/include/stddef.h:
+
+/usr/include/xlocale.h:
+
+../../gnulib/lib/verify.h:
