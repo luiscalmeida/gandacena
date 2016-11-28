@@ -20,7 +20,7 @@ set -e
 
 # Run them one at a time, otherwise rake runs them in parallel (which
 # is bound to fail because they all use a single test image file).
-export abs_srcdir=/root/Downloads/hivex-1.3.13/hivex-1.3.13/ruby
+export abs_srcdir=/root/Desktop/gandacena/winReg/hivex-1.3.13/ruby
 for f in ./tests/tc_*.rb; do
     echo $RAKE test "$@" TEST="$f"
     $RAKE test "$@" TEST="$f"

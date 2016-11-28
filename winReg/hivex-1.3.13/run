@@ -31,8 +31,8 @@
 
 # Source and build directories (absolute paths so this works from any
 # directory).
-s="$(cd /root/Downloads/hivex-1.3.13/hivex-1.3.13 && pwd)"
-b="$(cd /root/Downloads/hivex-1.3.13/hivex-1.3.13 && pwd)"
+s="$(cd /root/Desktop/gandacena/winReg/hivex-1.3.13 && pwd)"
+b="$(cd /root/Desktop/gandacena/winReg/hivex-1.3.13 && pwd)"
 
 # Set LD_LIBRARY_PATH to contain library.
 if [ -z "$LD_LIBRARY_PATH" ]; then

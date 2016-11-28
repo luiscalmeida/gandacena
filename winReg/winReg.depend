@@ -4,3 +4,89 @@
 	<stdlib.h>
 	<string.h>
 
+1480006217 source:/root/Desktop/gandacena/winReg/main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"winReg.c"
+
+1480014577 /root/Desktop/gandacena/winReg/winReg.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"./hivex-1.3.13/lib/handle.c"
+	"./hivex-1.3.13/lib/hivex.h"
+
+1424539064 /root/Desktop/gandacena/winReg/hivex-1.3.13/lib/hivex.h
+	<stdlib.h>
+	<stdint.h>
+	<errno.h>
+
+1480014674 /root/Desktop/gandacena/winReg/hivex-1.3.13/lib/handle.c
+	"../config.h"
+	<stdio.h>
+	<stdlib.h>
+	<stdint.h>
+	<inttypes.h>
+	<string.h>
+	<unistd.h>
+	<fcntl.h>
+	<sys/stat.h>
+	<errno.h>
+	<assert.h>
+	<sys/mman.h>
+	"mmap.h"
+	"full-read.h"
+	"full-write.h"
+	"c-ctype.h"
+	"hivex.h"
+	"hivex-internal.h"
+
+1354550745 /root/Desktop/gandacena/winReg/hivex-1.3.13/lib/mmap.h
+	<stdlib.h>
+	<sys/types.h>
+	"hivex.h"
+	"hivex-internal.h"
+
+1416519080 /root/Desktop/gandacena/winReg/hivex-1.3.13/lib/hivex-internal.h
+	<stdarg.h>
+	<stddef.h>
+	<string.h>
+	"byte_conversions.h"
+
+1354550745 /root/Desktop/gandacena/winReg/hivex-1.3.13/lib/byte_conversions.h
+	<endian.h>
+	<byteswap.h>
+
+1480006366 /root/Desktop/gandacena/winReg/hivex-1.3.13/config.h
+
+1446131593 /root/Desktop/gandacena/winReg/hivex-1.3.13/gnulib/lib/full-read.h
+	<stddef.h>
+
+1446131593 /root/Desktop/gandacena/winReg/hivex-1.3.13/gnulib/lib/full-write.h
+	<stddef.h>
+
+1446131593 /root/Desktop/gandacena/winReg/hivex-1.3.13/gnulib/lib/c-ctype.h
+	<stdbool.h>
+
+1446131593 /root/Desktop/gandacena/winReg/hivex-1.3.13/gnulib/lib/full-read.c
+	"full-write.c"
+
+1480011532 /root/Desktop/gandacena/winReg/hivex-1.3.13/gnulib/lib/full-write.c
+	"../../config.h"
+	"full-read.h"
+	"full-write.h"
+	<errno.h>
+	"safe-read.h"
+	"safe-write.h"
+
+1446131593 /root/Desktop/gandacena/winReg/hivex-1.3.13/gnulib/lib/safe-read.h
+	<stddef.h>
+
+1446131593 /root/Desktop/gandacena/winReg/hivex-1.3.13/gnulib/lib/safe-write.h
+	<stddef.h>
+
+1446131593 /root/Desktop/gandacena/winReg/hivex-1.3.13/gnulib/lib/c-ctype.c
+	<config.h>
+	"c-ctype.h"
+

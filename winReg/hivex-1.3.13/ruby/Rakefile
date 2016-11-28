@@ -40,10 +40,10 @@ end
 PKG_NAME='hivex'
 PKG_VERSION='1.3.13'
 
-EXT_CONF='/root/Downloads/hivex-1.3.13/hivex-1.3.13/ruby/ext/hivex/extconf.rb'
+EXT_CONF='/root/Desktop/gandacena/winReg/hivex-1.3.13/ruby/ext/hivex/extconf.rb'
 MAKEFILE='./ext/hivex/Makefile'
 HIVEX_MODULE='./ext/hivex/_hivex.so'
-HIVEX_SRC='/root/Downloads/hivex-1.3.13/hivex-1.3.13/ruby/ext/hivex/_hivex.c'
+HIVEX_SRC='/root/Desktop/gandacena/winReg/hivex-1.3.13/ruby/ext/hivex/_hivex.c'
 
 CLEAN.include [ "./ext/**/*.o", HIVEX_MODULE,
                 "./ext/**/depend" ]

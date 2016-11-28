@@ -63,7 +63,7 @@ configure:4105: found /usr/bin/gcc
 configure:4116: result: gcc
 configure:4345: checking for C compiler version
 configure:4354: gcc --version >&5
-gcc (Debian 6.1.1-11) 6.1.1 20160802
+gcc (Debian 6.2.0-13) 6.2.0 20161109
 Copyright (C) 2016 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
@@ -74,9 +74,9 @@ Using built-in specs.
 COLLECT_GCC=gcc
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/6/lto-wrapper
 Target: x86_64-linux-gnu
-Configured with: ../src/configure -v --with-pkgversion='Debian 6.1.1-11' --with-bugurl=file:///usr/share/doc/gcc-6/README.Bugs --enable-languages=c,ada,c++,java,go,d,fortran,objc,obj-c++ --prefix=/usr --program-suffix=-6 --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-libmpx --enable-plugin --with-system-zlib --disable-browser-plugin --enable-java-awt=gtk --enable-gtk-cairo --with-java-home=/usr/lib/jvm/java-1.5.0-gcj-6-amd64/jre --enable-java-home --with-jvm-root-dir=/usr/lib/jvm/java-1.5.0-gcj-6-amd64 --with-jvm-jar-dir=/usr/lib/jvm-exports/java-1.5.0-gcj-6-amd64 --with-arch-directory=amd64 --with-ecj-jar=/usr/share/java/eclipse-ecj.jar --enable-objc-gc --enable-multiarch --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
+Configured with: ../src/configure -v --with-pkgversion='Debian 6.2.0-13' --with-bugurl=file:///usr/share/doc/gcc-6/README.Bugs --enable-languages=c,ada,c++,java,go,d,fortran,objc,obj-c++ --prefix=/usr --program-suffix=-6 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-libmpx --enable-plugin --enable-default-pie --with-system-zlib --disable-browser-plugin --enable-java-awt=gtk --enable-gtk-cairo --with-java-home=/usr/lib/jvm/java-1.5.0-gcj-6-amd64/jre --enable-java-home --with-jvm-root-dir=/usr/lib/jvm/java-1.5.0-gcj-6-amd64 --with-jvm-jar-dir=/usr/lib/jvm-exports/java-1.5.0-gcj-6-amd64 --with-arch-directory=amd64 --with-ecj-jar=/usr/share/java/eclipse-ecj.jar --enable-objc-gc --enable-multiarch --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
 Thread model: posix
-gcc version 6.1.1 20160802 (Debian 6.1.1-11) 
+gcc version 6.2.0 20161109 (Debian 6.2.0-13) 
 configure:4365: $? = 0
 configure:4354: gcc -V >&5
 gcc: error: unrecognized command line option '-V'
@@ -458,8 +458,8 @@ configure:6515: $? = 0
 configure:6523: result: yes
 configure:6766: checking for _set_invalid_parameter_handler
 configure:6766: gcc -o conftest -g -O2   conftest.c  >&5
-/tmp/ccRzjs4g.o: In function `main':
-/root/Downloads/hivex-1.3.13/hivex-1.3.13/conftest.c:69: undefined reference to `_set_invalid_parameter_handler'
+/tmp/ccg9BA16.o: In function `main':
+/root/Desktop/gandacena/winReg/hivex-1.3.13/conftest.c:69: undefined reference to `_set_invalid_parameter_handler'
 collect2: error: ld returned 1 exit status
 configure:6766: $? = 1
 configure: failed program was:
@@ -561,8 +561,8 @@ configure:6766: $? = 0
 configure:6766: result: yes
 configure:6766: checking for vasnprintf
 configure:6766: gcc -o conftest -g -O2   conftest.c  >&5
-/tmp/ccke0RZx.o: In function `main':
-/root/Downloads/hivex-1.3.13/hivex-1.3.13/conftest.c:74: undefined reference to `vasnprintf'
+/tmp/ccku4zvk.o: In function `main':
+/root/Desktop/gandacena/winReg/hivex-1.3.13/conftest.c:74: undefined reference to `vasnprintf'
 collect2: error: ld returned 1 exit status
 configure:6766: $? = 1
 configure: failed program was:
@@ -6697,6 +6697,7 @@ config.status:2206: creating python/run-python-tests
 config.status:2206: creating ruby/run-ruby-tests
 config.status:2206: creating run
 config.status:2206: creating config.h
+config.status:2387: config.h is unchanged
 config.status:2466: executing depfiles commands
 config.status:2466: executing libtool commands
 config.status:2466: executing po-directories commands
@@ -7346,7 +7347,7 @@ pkg_cv_LIBXML2_LIBS=-lxml2
 ## Output variables. ##
 ## ----------------- ##
 
-ACLOCAL='${SHELL} /root/Downloads/hivex-1.3.13/hivex-1.3.13/build-aux/missing aclocal-1.15'
+ACLOCAL='${SHELL} /root/Desktop/gandacena/winReg/hivex-1.3.13/build-aux/missing aclocal-1.15'
 ALLOCA=''
 ALLOCA_H='alloca.h'
 AMDEPBACKSLASH='\'
@@ -7360,9 +7361,9 @@ AM_V='$(V)'
 APPLE_UNIVERSAL_BUILD='0'
 AR='ar'
 ARFLAGS='cr'
-AUTOCONF='${SHELL} /root/Downloads/hivex-1.3.13/hivex-1.3.13/build-aux/missing autoconf'
-AUTOHEADER='${SHELL} /root/Downloads/hivex-1.3.13/hivex-1.3.13/build-aux/missing autoheader'
-AUTOMAKE='${SHELL} /root/Downloads/hivex-1.3.13/hivex-1.3.13/build-aux/missing automake-1.15'
+AUTOCONF='${SHELL} /root/Desktop/gandacena/winReg/hivex-1.3.13/build-aux/missing autoconf'
+AUTOHEADER='${SHELL} /root/Desktop/gandacena/winReg/hivex-1.3.13/build-aux/missing autoheader'
+AUTOMAKE='${SHELL} /root/Desktop/gandacena/winReg/hivex-1.3.13/build-aux/missing automake-1.15'
 AWK='mawk'
 BITSIZEOF_PTRDIFF_T=''
 BITSIZEOF_SIG_ATOMIC_T=''
@@ -7909,7 +7910,7 @@ LTLIBICONV=''
 LTLIBINTL=''
 LTLIBOBJS=''
 LT_SYS_LIBRARY_PATH=''
-MAKEINFO='${SHELL} /root/Downloads/hivex-1.3.13/hivex-1.3.13/build-aux/missing makeinfo'
+MAKEINFO='${SHELL} /root/Desktop/gandacena/winReg/hivex-1.3.13/build-aux/missing makeinfo'
 MANIFEST_TOOL=':'
 MKDIR_P='/bin/mkdir -p'
 MSGFMT=':'
@@ -8162,7 +8163,7 @@ WINT_T_SUFFIX=''
 XGETTEXT=':'
 XGETTEXT_015=':'
 XGETTEXT_EXTRA_OPTIONS=' --flag=error:3:c-format --flag=error_at_line:5:c-format --flag=asprintf:2:c-format --flag=vasprintf:2:c-format'
-abs_aux_dir='/root/Downloads/hivex-1.3.13/hivex-1.3.13/build-aux'
+abs_aux_dir='/root/Desktop/gandacena/winReg/hivex-1.3.13/build-aux'
 ac_ct_AR='ar'
 ac_ct_CC='gcc'
 ac_ct_DUMPBIN=''
@@ -8201,7 +8202,7 @@ host_vendor='unknown'
 htmldir='${docdir}'
 includedir='${prefix}/include'
 infodir='${datarootdir}/info'
-install_sh='${SHELL} /root/Downloads/hivex-1.3.13/hivex-1.3.13/build-aux/install-sh'
+install_sh='${SHELL} /root/Desktop/gandacena/winReg/hivex-1.3.13/build-aux/install-sh'
 libdir='${exec_prefix}/lib'
 libexecdir='${exec_prefix}/libexec'
 localedir='${datarootdir}/locale'

@@ -11,7 +11,7 @@ NULLCMD = :
 
 #### Start of system configuration section. ####
 
-srcdir = /root/Downloads/hivex-1.3.13/hivex-1.3.13/ruby/ext/hivex
+srcdir = /root/Desktop/gandacena/winReg/hivex-1.3.13/ruby/ext/hivex
 topdir = /usr/include/ruby-2.3.0
 hdrdir = $(topdir)
 arch_hdrdir = /usr/include/x86_64-linux-gnu/ruby-2.3.0
@@ -79,13 +79,13 @@ cflags   =  $(optflags) $(debugflags) $(warnflags)
 cxxflags =  $(optflags) $(debugflags) $(warnflags)
 optflags = -O3 -fno-fast-math
 debugflags = -ggdb3
-warnflags = -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wunused-variable -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration -Wdeprecated-declarations -Wno-packed-bitfield-compat -Wno-maybe-uninitialized
+warnflags = -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wunused-variable -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration -Wdeprecated-declarations -Wno-packed-bitfield-compat
 CCDLFLAGS = -fPIC
-CFLAGS   = $(CCDLFLAGS) -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -fPIC $(ARCH_FLAG)
+CFLAGS   = $(CCDLFLAGS) -g -O2 -fdebug-prefix-map=/build/ruby2.3-ZV0pSR/ruby2.3-2.3.1=. -fstack-protector-strong -Wformat -Werror=format-security -fPIC $(ARCH_FLAG)
 INCFLAGS = -I. -I$(arch_hdrdir) -I$(hdrdir)/ruby/backward -I$(hdrdir) -I$(srcdir)
 DEFS     = 
-CPPFLAGS = -DRUBY_EXTCONF_H=\"$(RUBY_EXTCONF_H)\" -I/root/Downloads/hivex-1.3.13/hivex-1.3.13/ruby/../lib -Wdate-time -D_FORTIFY_SOURCE=2 $(DEFS) $(cppflags)
-CXXFLAGS = $(CCDLFLAGS) -g -O2 -fstack-protector-strong -Wformat -Werror=format-security $(ARCH_FLAG)
+CPPFLAGS = -DRUBY_EXTCONF_H=\"$(RUBY_EXTCONF_H)\" -I/root/Desktop/gandacena/winReg/hivex-1.3.13/ruby/../lib -Wdate-time -D_FORTIFY_SOURCE=2 $(DEFS) $(cppflags)
+CXXFLAGS = $(CCDLFLAGS) -g -O2 -fdebug-prefix-map=/build/ruby2.3-ZV0pSR/ruby2.3-2.3.1=. -fstack-protector-strong -Wformat -Werror=format-security $(ARCH_FLAG)
 ldflags  = -L. -Wl,-z,relro -Wl,-z,now -fstack-protector -rdynamic -Wl,-export-dynamic
 dldflags =  
 ARCH_FLAG = 
@@ -123,8 +123,8 @@ TOUCH = exit >
 
 preload = 
 
-libpath = . $(archlibdir) /root/Downloads/hivex-1.3.13/hivex-1.3.13/ruby/../lib/.libs
-LIBPATH =  -L. -L$(archlibdir) -L/root/Downloads/hivex-1.3.13/hivex-1.3.13/ruby/../lib/.libs
+libpath = . $(archlibdir) /root/Desktop/gandacena/winReg/hivex-1.3.13/ruby/../lib/.libs
+LIBPATH =  -L. -L$(archlibdir) -L/root/Desktop/gandacena/winReg/hivex-1.3.13/ruby/../lib/.libs
 DEFFILE = 
 
 CLEANFILES = mkmf.log

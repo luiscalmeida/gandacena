@@ -1,29 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "winReg.c"
+//#include "winReg.c"
 
 void greeting(){
-    printf(" /****************************************\\\n");
-    printf("|**************** xTractor ****************|\n");
-    printf(" \\****************************************/\n");
+    printf("\t /****************************************\\\n");
+    printf("\t|**************** xTractor ****************|\n");
+    printf("\t \\****************************************/\n");
     printf("\n");
 }
 
 void menu(){
-    printf("Select from the menu:\n\n");
-    printf("1 - System information\n");
-    printf("2 - List all networks connected\n");
-    printf("3 - List all devices plugged in\n");
-    printf("4 - List recent files\n");
-    printf("5 - List recent downloaded files\n");
-    printf("6 - List recent launched programs\n");
-    printf("7 - Physical location\n");
-    printf("8 - Login history\n");
-    printf("9 - Browser history\n");
-    printf("0 - Help\n");
-    printf("98 - About this tool\n");
-    printf("99 - Exit\n\n");
+    printf("\t\tSelect from the menu:\n\n");
+    printf("\t1 - System information\n");
+    printf("\t2 - List all networks connected\n");
+    printf("\t3 - List all devices plugged in\n");
+    printf("\t4 - List recent files\n");
+    printf("\t5 - List recent downloaded files\n");
+    printf("\t6 - List recent launched programs\n");
+    printf("\t7 - Physical location\n");
+    printf("\t8 - Login history\n");
+    printf("\t9 - Browser history\n");
+    printf("\t0 - Help\n");
+    printf("\t98 - About this tool\n");
+    printf("\t99 - Exit\n\n");
 }
 
 void prompt(){
@@ -38,12 +38,13 @@ int main(int argc, char *argv[])
         menu();
         prompt();
         scanf("%d", &command);
+	printf("\n");
         switch(command){
             case 0 :
                 printf("print help file\n");
                 break;
             case 1 :
-                extractOS("SYSTEM");
+                //extractOS("SYSTEM");
                 break;
             case 2 :
 
@@ -60,9 +61,27 @@ int main(int argc, char *argv[])
             case 6 :
 
                 break;
+	    case 7 :
+
+                break;
+	    case 8 :	
+
+                break;
+	    case 9 :
+
+                break;
+	    case 98 :
+		printf("xTractor is a post-mortem forensic tool that will extract certain data from windows registry of a ntfs file system image given as imput. It was develop by a team of three young IT engineers as a subject of Ciber Security Forensic course.\n");
+                break;
+	    case 99 :
+		printf("Thank you for using xTractor!\n");
+		exit(0);
+                break;
             default:
                 printf("Invalid choice\n");
+		break;
         }
+	printf("\n");
     }
     return 0;
 }
