@@ -1,8 +1,14 @@
 #!/bin/bash
+
+if [[ $# != 1 ]] || [ $1 == "-h" ]; 
+then
+	echo "Usage: ./csf_script.sh [dd image]"; 
+	exit 1; 
+fi
 umount mnt 2>/dev/null
 rm -r mnt 2>/dev/null
 mkdir ./mnt
-mmls_result=`mmls $1`
+mmls_result=`mmls $1 2>/dev/null`
 ntfs_result=`echo "$mmls_result" | grep NTFS`
 if [ -z "$ntfs_result" ]; 
 	then echo "There's no NTFS file system in $1."; 
