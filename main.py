@@ -1,4 +1,5 @@
 import sys
+from Registry import Registry
 
 class bcolors:
     HEADER = '\033[95m'
@@ -60,16 +61,28 @@ def prompt():
 	sys.stdout.write(' > ')
 	sys.stdout.flush()
 
+#imprime todas as keys num registry
+def rec(key, depth=0):
+	print "\t" * depth + key.path()
+	
+	for subkey in key.subkeys():
+		rec(subkey,depth + 1)
+
 def main():
 	greeting()
 	while True:
 		menu()
 		prompt()
-		command = int(raw_input(" "))
-		print " "
+		command = int(raw_input())
 		if command == 0:
 			help()
 		elif command == 1:
+			regabrir = raw_input()
+			#exemplo de input para dar:
+			#./mnt/Users/admin11/NTUSER.DAT
+			reg = Registry.Registry(regabrir)
+			#abre registo e imprime todas as keys
+			rec(reg.root())
 			print " "
 		elif command == 2:
 			print " "
