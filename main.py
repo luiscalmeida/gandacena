@@ -63,6 +63,7 @@ def prompt():
 
 #imprime todas as keys num registry
 def rec(key, depth=0):
+	print("Key: " + key.name() + " Depth: " + str(depth))
 	print "\t" * depth + key.path()
 	
 	for subkey in key.subkeys():
@@ -80,12 +81,25 @@ def main():
 			regabrir = raw_input()
 			#exemplo de input para dar:
 			#./mnt/Users/admin11/NTUSER.DAT
+
 			reg = Registry.Registry(regabrir)
 			#abre registo e imprime todas as keys
 			rec(reg.root())
 			print " "
 		elif command == 2:
 			print " "
+			yoyo = raw_input()
+			#com input ./mnt/Users/admin11/NTUSER.DAT
+			reg = Registry.Registry(yoyo)
+			try:
+				#usei o 1 para imprimir as keys e saquei uma a toa de la
+    				key = reg.open("System\CurrentControlSet\Control\Network\NetworkLocationWizard")
+			except Registry.RegistryKeyNotFoundException:
+				print("Fuck you")
+				sys.exit(-1)
+			for value in [v for v in key.values()]:
+				#if v.value_type() == Registry.RegSZ or v.value_type() == Registry.RegExpandSZ:
+    				print "%s %s" % (value.name(),value.value())
 		elif command == 3:
 			print " "
 		elif command == 4:
