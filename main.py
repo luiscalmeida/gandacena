@@ -1,6 +1,11 @@
 import sys
 from Registry import Registry
 
+import recentFiles_4
+import downloadedFiles_5
+import launchedPrograms_6
+
+
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -84,7 +89,7 @@ def main():
 
 			reg = Registry.Registry(regabrir)
 			#abre registo e imprime todas as keys
-			rec(reg.root())
+			#rec(reg.root())
 			print " "
 		elif command == 2:
 			print " "
@@ -97,7 +102,7 @@ def main():
 			except Registry.RegistryKeyNotFoundException:
 				print("Fuck you")
 				sys.exit(-1)
-			for value in [v for v in key.values()]:
+			for value in [v for v in key.values()]: 
 				#if v.value_type() == Registry.RegSZ or v.value_type() == Registry.RegExpandSZ:
     				print "%s %s" % (value.name(),value.value())
 		elif command == 3:
