@@ -13,7 +13,7 @@ def open_key(reg, path):
 	try:
 		return reg.open(path)
 	except Registry.RegistryKeyNotFoundException:
-		print("Can't find any keys (later will erase this print. User doesn't need to know)")
+		print "Can't find any keys (later will erase this print. User doesn't need to know)"
 		#sys.exit(-1)
 
 #######################################################################
@@ -52,13 +52,13 @@ def shell_bags(reg):
 	# NTUSER.DAT\Software\Microsoft\Windows\ShellNoRoam\Bags 
 
 # .lnk files automatically created by windows for recent items
-def shortcut_files(reg): 
+def shortcut_files(reg, user): 
 	print " "
 	print "***** SHORTCUT FILES *****"
 	print " "
 	# os.chdir(path)
 	# os.chdir("./mnt/Users/admin11/AppData/Roaming/Microsoft/Windows/Recent")
-	for entry in os.listdir("./mnt/Users/admin11/AppData/Roaming/Microsoft/Windows/Recent"):
+	for entry in os.listdir("./mnt/Users/" + user + "/AppData/Roaming/Microsoft/Windows/Recent"):
 		if entry != "AutomaticDestinations" and entry != "CustomDestinations":  #exclude these folders
 			print entry
 	# C:\Users\<user>\AppData\Roaming\Microsoft\Windows\Recent\ 
@@ -66,7 +66,7 @@ def shortcut_files(reg):
 
 
 # files accessed on the browser like "file:\\C:\dir\file.txt"
-def recent_browser_files(reg):
+def recent_browser_files(reg, user):
 	print " "
 	print "***** RECENT BROWSER FILES *****"
 	print " "

@@ -56,16 +56,18 @@ def app_compatibility_cache(reg):
 	print " "
 	print "***** APP COMPATIBILITY CACHE *****"
 	print " "
+	key = open_key(reg, "SYSTEM\CurrentControlSet\Control\Session Manager\AppCompatCache")
+	print_values(key)
 	# SYSTEM\CurrentControlSet\Control\Session Manager\AppCompatCache
 
 
 # frequently accessed items on Start menu
-def jump_lists(reg):
+def jump_lists(reg, user):
 	print " "
 	print "***** JUMP LISTS *****"
 	print " "
 	# C:\Users\<user>\AppData\Roaming\Microsoft\Windows\Recent\AutomaticDestinations
-	for entry in os.listdir("./mnt/Users/admin11/AppData/Roaming/Microsoft/Windows/Recent/AutomaticDestinations"):
+	for entry in os.listdir("./mnt/Users/" + user + "/AppData/Roaming/Microsoft/Windows/Recent/AutomaticDestinations"):
 		print entry
 
 
@@ -85,7 +87,14 @@ def prefetch(reg):
 		if i % 5 == 0:
 			sys.stdout.write("\n")
 		else:
-			sys.stdout.write(entry.split("-")[0] + "\t\t")
+			if len(entry.split("-")[0]) > 21:
+				sys.stdout.write(entry.split("-")[0] + "  ")
+			elif len(entry.split("-")[0]) > 15:
+				sys.stdout.write(entry.split("-")[0] + "\t")
+			elif len(entry.split("-")[0]) < 7:
+				sys.stdout.write(entry.split("-")[0] + "\t\t\t")
+			else:
+				sys.stdout.write(entry.split("-")[0] + "\t\t")
 	# C:\Windows\Prefetch\(exename)-(hash).pf
 
 

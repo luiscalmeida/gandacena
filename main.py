@@ -1,4 +1,5 @@
 import sys
+import os
 from Registry import Registry
 
 import recentFiles_4
@@ -66,6 +67,30 @@ def prompt():
 	sys.stdout.write(' > ')
 	sys.stdout.flush()
 
+def get_user():
+	users = []
+	print bcolors.BOLD + bcolors.FAIL + "Choose which user would you like to retrieve information from (write exactly as it is written):\n"
+	for entry in os.listdir("./mnt/Users"):
+		if entry != "All Users" and entry != "Default" \
+				and entry != "Default User" and entry != "desktop.ini" and entry != "informant" \
+				and entry != "Public" and entry != "temporary":
+			print bcolors.ENDC + "\t" + entry
+			users.append(entry)
+	choice = ""
+	prompt()
+	choice = raw_input()
+	while(not choice in users):
+		print "\n" + bcolors.FAIL + "Inexistent user. Please write one from the list"
+		prompt()
+		choice = raw_input()
+	print " "
+	return choice
+	"""for entry in os.listdir("./mnt/Users"): #exclude these folders/files
+		if entry != "All Users" and entry != "Default" \
+		and entry != "Default User" and entry != "desktop.ini" and entry != "informant" \
+		and entry != "Public" and entry != "temporary":
+			return entry"""
+
 #imprime todas as keys num registry
 def rec(key, depth=0):
 	print("Key: " + key.name() + " Depth: " + str(depth))
@@ -76,6 +101,7 @@ def rec(key, depth=0):
 
 def main():
 	greeting()
+	user = str(get_user())
 	while True:
 		menu()
 		prompt()
@@ -109,30 +135,33 @@ def main():
 			print " "
 		elif command == 4:
 			print " "
-			reg = Registry.Registry("../NTUSER.DAT")
+			#reg = Registry.Registry("../NTUSER.DAT")
+			reg = Registry.Registry("./mnt/Users/" + user + "/NTUSER.DAT")
 			recentFiles_4.recent_files(reg)
 			recentFiles_4.office_recent_files(reg)
 			recentFiles_4.shell_bags(reg)
-			recentFiles_4.shortcut_files(reg)
-			recentFiles_4.recent_browser_files(reg)
+			recentFiles_4.shortcut_files(reg, user)
+			recentFiles_4.recent_browser_files(reg, user)
 		elif command == 5:
 			print " "
-			reg = Registry.Registry("../NTUSER.DAT")
-			downloadedFiles_5.open_save_MRU(reg)
-			downloadedFiles_5.email_attachments(reg)
-			downloadedFiles_5.skype_history(reg)
-			downloadedFiles_5.downloads_IE(reg)
-			downloadedFiles_5.downloads_FF(reg)
+			#reg = Registry.Registry("../NTUSER.DAT")
+			reg = Registry.Registry("./mnt/Users/" + user + "/NTUSER.DAT")
+			#downloadedFiles_5.open_save_MRU(reg)
+			downloadedFiles_5.email_attachments(reg, user)
+			downloadedFiles_5.skype_history(reg, user)
+			downloadedFiles_5.downloads_IE(reg, user)
+			downloadedFiles_5.downloads_FF(reg, user)
 		elif command == 6:
 			reg = Registry.Registry("../NTUSER.DAT")
+			#reg = Registry.Registry("./mnt/Users/" + user + "/NTUSER.DAT")
 			launchedPrograms_6.user_assist(reg)
 			#launchedPrograms_6.last_visited_MRU(reg)
 			launchedPrograms_6.run_MRU(reg)
-			#reg = Registry.Registry("SYSTEM")
-			launchedPrograms_6.app_compatibility_cache(reg)
-			launchedPrograms_6.jump_lists(reg)
+			#reg = Registry.Registry("./mnt/Windows/System32/config/SYSTEM")
+			#launchedPrograms_6.app_compatibility_cache(reg)
+			launchedPrograms_6.jump_lists(reg, user)
 			launchedPrograms_6.prefetch(reg)
-			#reg = Registry.Registry("NTUSER.DAT")
+			reg = Registry.Registry("./mnt/Users/" + user + "/NTUSER.DAT")
 			launchedPrograms_6.auto_run(reg)
 		elif command == 7:
 			print " "

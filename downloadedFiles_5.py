@@ -1,5 +1,9 @@
 import sys
+import os
+from pprint import pprint
+import pasco
 from Registry import Registry
+import skype_db
 
 ################################ UTILS ################################
 
@@ -34,7 +38,7 @@ def open_save_MRU(reg):
 
 
 # downloads via e-mail attachments
-def email_attachments(reg):
+def email_attachments(reg, user):
 	print " "
 	print "***** EMAIL ATTACHMENTS *****"
 	print " "
@@ -42,24 +46,38 @@ def email_attachments(reg):
 
 
 # Log of transfered files from skype
-def skype_history(reg):
+def skype_history(reg, user):
 	print " "
 	print "***** SKYPE HISTORY *****"
 	print " "
+	try:
+		for entry in os.listdir("./mnt/Users/" + user + "/AppData/Roaming/Skype"):
+			if entry != "Content" and entry != "DataRv" and entry != "My Skype Received Files" \
+			and entry != "RootTools" and entry != "shared.lck" and entry != "shared.xml" \
+			and entry != "shared_dynco" and entry != "shared_httpfe":
+				skype_name = entry
+		skype_db.skype_db_contacts("./mnt/Users/" + user + "/AppData/Roaming/Skype/" + skype_name + "/main.db")
+		skype_db.skype_db_transfers("./mnt/Users/" + user + "/AppData/Roaming/Skype/" + skype_name + "/main.db")
+	except:
+		print "No Skype Directory"
 	# C:\Users\<username>\AppData\Roaming\Skype\<skype-name> 
 
 
 # Internet Explorer download history
-def downloads_IE(reg): #index.dat file
+def downloads_IE(reg, user): #index.dat file
 	print " "
 	print "***** DOWNLOADS INTERNET EXPLORER *****"
 	print " "
+	"""ip = pasco.IndexParser()
+	for match in ip.parse("./m"):
+		if match:
+			pprint(match)"""
 	# %userprofile%\AppData\Local\Microsoft\Windows\History\History.IE5 
 	# %userprofile%\AppData\Local\Microsoft\Windows\History\Low\History.IE5 
 
 
 #Firefox built-in download manager keeps download history
-def downloads_FF(reg): #downloads.sqlite
+def downloads_FF(reg, user): #downloads.sqlite
 	print " "
 	print "***** DOWNLOADS FIREFOX *****"
 	print " "
