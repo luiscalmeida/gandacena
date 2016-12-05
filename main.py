@@ -109,10 +109,31 @@ def main():
 			print " "
 		elif command == 4:
 			print " "
+			reg = Registry.Registry("../NTUSER.DAT")
+			recentFiles_4.recent_files(reg)
+			recentFiles_4.office_recent_files(reg)
+			recentFiles_4.shell_bags(reg)
+			recentFiles_4.shortcut_files(reg)
+			recentFiles_4.recent_browser_files(reg)
 		elif command == 5:
 			print " "
+			reg = Registry.Registry("../NTUSER.DAT")
+			downloadedFiles_5.open_save_MRU(reg)
+			downloadedFiles_5.email_attachments(reg)
+			downloadedFiles_5.skype_history(reg)
+			downloadedFiles_5.downloads_IE(reg)
+			downloadedFiles_5.downloads_FF(reg)
 		elif command == 6:
-			print " "
+			reg = Registry.Registry("../NTUSER.DAT")
+			launchedPrograms_6.user_assist(reg)
+			#launchedPrograms_6.last_visited_MRU(reg)
+			launchedPrograms_6.run_MRU(reg)
+			#reg = Registry.Registry("SYSTEM")
+			launchedPrograms_6.app_compatibility_cache(reg)
+			launchedPrograms_6.jump_lists(reg)
+			launchedPrograms_6.prefetch(reg)
+			#reg = Registry.Registry("NTUSER.DAT")
+			launchedPrograms_6.auto_run(reg)
 		elif command == 7:
 			print " "
 		elif command == 8:
