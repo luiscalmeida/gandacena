@@ -69,14 +69,25 @@ def prompt():
 
 def get_user():
 	users = []
-	print bcolors.BOLD + bcolors.FAIL + "Choose which user would you like to retrieve information from (write exactly as it is written):\n"
 	for entry in os.listdir("./mnt/Users"):
 		if entry != "All Users" and entry != "Default" \
 				and entry != "Default User" and entry != "desktop.ini" and entry != "informant" \
 				and entry != "Public" and entry != "temporary":
-			print bcolors.ENDC + "\t" + entry
 			users.append(entry)
 	choice = ""
+	if len(users) == 0 :
+		print " "
+		print "No users in the file system! Exiting xTractor"
+		sys.exit()
+	elif len(users) == 1:
+		print " "
+		print "IMPORTANT: As this file system only has one user we will explore that one: " + bcolors.ENDC + users[0]
+		print " "
+		choice = users[0]
+		return choice
+	print bcolors.BOLD + bcolors.FAIL + "Choose the user you pretend to explore from the list below (write exactly as it is written):\n"
+	for entry in users:
+		print bcolors.ENDC + "\t" + entry
 	prompt()
 	choice = raw_input()
 	while(not choice in users):
@@ -105,100 +116,115 @@ def main():
 	while True:
 		menu()
 		prompt()
-		command = int(raw_input())
-		if command == 0:
-			help()
-		elif command == 1:
-			regabrir = raw_input()
-			#exemplo de input para dar:
-			#./mnt/Users/admin11/NTUSER.DAT
+		command = raw_input()
+		if command.isdigit():
+			command = int(command)
+			if command == 0:
+				print " "
+				help()
+			elif command == 1:
+				regabrir = raw_input()
+				#exemplo de input para dar:
+				#./mnt/Users/admin11/NTUSER.DAT
 
-			reg = Registry.Registry(regabrir)
-			#abre registo e imprime todas as keys
-			#rec(reg.root())
-			print " "
-		elif command == 2:
-			print " "
-			yoyo = raw_input()
-			#com input ./mnt/Users/admin11/NTUSER.DAT
-			reg = Registry.Registry(yoyo)
-			try:
-				#usei o 1 para imprimir as keys e saquei uma a toa de la
-    				key = reg.open("System\CurrentControlSet\Control\Network\NetworkLocationWizard")
-			except Registry.RegistryKeyNotFoundException:
-				print("Fuck you")
-				sys.exit(-1)
-			for value in [v for v in key.values()]: 
-				#if v.value_type() == Registry.RegSZ or v.value_type() == Registry.RegExpandSZ:
-    				print "%s %s" % (value.name(),value.value())
-		elif command == 3:
-			print " "
-		elif command == 4:
-			print " "
-			#reg = Registry.Registry("../NTUSER.DAT")
-			reg = Registry.Registry("./mnt/Users/" + user + "/NTUSER.DAT")
-			recentFiles_4.recent_files(reg)
-			recentFiles_4.office_recent_files(reg)
-			recentFiles_4.shell_bags(reg)
-			recentFiles_4.shortcut_files(reg, user)
-			recentFiles_4.recent_browser_files(reg, user)
-		elif command == 5:
-			print " "
-			#reg = Registry.Registry("../NTUSER.DAT")
-			reg = Registry.Registry("./mnt/Users/" + user + "/NTUSER.DAT")
-			#downloadedFiles_5.open_save_MRU(reg)
-			downloadedFiles_5.email_attachments(reg, user)
-			downloadedFiles_5.skype_history(reg, user)
-			downloadedFiles_5.downloads_IE(reg, user)
-			downloadedFiles_5.downloads_FF(reg, user)
-		elif command == 6:
-			reg = Registry.Registry("../NTUSER.DAT")
-			#reg = Registry.Registry("./mnt/Users/" + user + "/NTUSER.DAT")
-			launchedPrograms_6.user_assist(reg)
-			#launchedPrograms_6.last_visited_MRU(reg)
-			launchedPrograms_6.run_MRU(reg)
-			#reg = Registry.Registry("./mnt/Windows/System32/config/SYSTEM")
-			#launchedPrograms_6.app_compatibility_cache(reg)
-			launchedPrograms_6.jump_lists(reg, user)
-			launchedPrograms_6.prefetch(reg)
-			reg = Registry.Registry("./mnt/Users/" + user + "/NTUSER.DAT")
-			launchedPrograms_6.auto_run(reg)
-		elif command == 7:
-			#Need func to ask for user
-                        #reg = Registry.Registry("./mnt/Users/admin11/NTUSER.DAT")
-                        #begin---timezone
-                        reg = Registry.Registry("./mnt/Windows/System32/config/SYSTEM")
-                        res = physloc.timezone_settings("./mnt/Windows/System32/config/SYSTEM")
-                        for e in res:
-                                print(e)
-                        #begin---network history
-                        physloc.network_history(reg)
-                        #begin cookies
-                        res = physloc.cookies(user)
-                        if not res:
-                                print("No Cookies found")
-                        else:
-                                print("Cookies in file: " + res)
-                        #begin browser search
-                        physloc.browser_search(user)
-                        if not res:
-                                print("No History Found")
-                        else:
-                                for e in res:
-                                        print(res)
-                        print " "
-		elif command == 8:
-			print " "
-		elif command == 9:
-			print " "
-		elif command == 98:
-			about()
-		elif command == 99:
-			print "\tThank you for using xTractor!\n"
-			sys.exit()
+				reg = Registry.Registry(regabrir)
+				#abre registo e imprime todas as keys
+				#rec(reg.root())
+				print " "
+			elif command == 2:
+				print " "
+				yoyo = raw_input()
+				#com input ./mnt/Users/admin11/NTUSER.DAT
+				reg = Registry.Registry(yoyo)
+				try:
+					#usei o 1 para imprimir as keys e saquei uma a toa de la
+	    				key = reg.open("System\CurrentControlSet\Control\Network\NetworkLocationWizard")
+				except Registry.RegistryKeyNotFoundException:
+					print("Fuck you")
+					sys.exit(-1)
+				for value in [v for v in key.values()]: 
+					#if v.value_type() == Registry.RegSZ or v.value_type() == Registry.RegExpandSZ:
+	    				print "%s %s" % (value.name(),value.value())
+			elif command == 3:
+				print " "
+			elif command == 4:
+				print " "
+				#reg = Registry.Registry("../NTUSER.DAT")
+				
+				reg = Registry.Registry("./mnt/Users/" + user + "/NTUSER.DAT")
+				recentFiles_4.recent_files(reg)
+				recentFiles_4.office_recent_files(reg)
+				recentFiles_4.shell_bags(reg)
+				recentFiles_4.shortcut_files(reg, user)
+				recentFiles_4.recent_browser_files(reg, user)
+				print " "
+			elif command == 5:
+				print " "
+				reg = Registry.Registry("../NTUSER.DAT")
+				#reg = Registry.Registry("./mnt/Users/" + user + "/NTUSER.DAT")
+				downloadedFiles_5.open_save_MRU(reg)
+				downloadedFiles_5.email_attachments(reg, user)
+				downloadedFiles_5.skype_history(reg, user)
+				downloadedFiles_5.downloads_IE(reg, user)
+				downloadedFiles_5.downloads_FF(reg, user)
+				print " "
+			elif command == 6:
+				reg = Registry.Registry("../NTUSER.DAT")
+				#reg = Registry.Registry("./mnt/Users/" + user + "/NTUSER.DAT")
+				launchedPrograms_6.user_assist(reg)
+				launchedPrograms_6.last_visited_MRU(reg)
+				launchedPrograms_6.run_MRU(reg)
+				reg = Registry.Registry("../regBackup/SYSTEM")
+				#reg = Registry.Registry("./mnt/Windows/System32/config/SYSTEM")
+				launchedPrograms_6.app_compatibility_cache(reg, "../regBackup/SYSTEM")
+				launchedPrograms_6.jump_lists(reg, user)
+				launchedPrograms_6.prefetch(reg)
+				reg = Registry.Registry("../NTUSER.DAT")
+				#reg = Registry.Registry("./mnt/Users/" + user + "/NTUSER.DAT")
+				launchedPrograms_6.auto_run(reg)
+				print " "
+			elif command == 7:
+				#Need func to ask for user
+	                        #reg = Registry.Registry("./mnt/Users/admin11/NTUSER.DAT")
+	                        #begin---timezone
+	                        reg = Registry.Registry("./mnt/Windows/System32/config/SYSTEM")
+	                        res = physloc.timezone_settings("./mnt/Windows/System32/config/SYSTEM")
+	                        for e in res:
+	                                print(e)
+	                        #begin---network history
+	                        physloc.network_history(reg)
+	                        #begin cookies
+	                        res = physloc.cookies(user)
+	                        if not res:
+	                                print("No Cookies found")
+	                        else:
+	                                print("Cookies in file: " + res)
+	                        #begin browser search
+	                        physloc.browser_search(user)
+	                        if not res:
+	                                print("No History Found")
+	                        else:
+	                                for e in res:
+	                                        print(res)
+	                        print " "
+			elif command == 8:
+				print " "
+			elif command == 9:
+				print " "
+			elif command == 98:
+				print " "
+				about()
+			elif command == 99:
+				print "\tThank you for using xTractor!\n"
+				sys.exit()
+			else:
+				print " "
+				print "Invalid choice! Try again"
+				print " "
 		else:
+			print " "
 			print "Invalid choice! Try again"
-
+			print " "
 
 
 
