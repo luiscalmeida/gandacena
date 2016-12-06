@@ -1,7 +1,7 @@
 import sys
 import os
 from pprint import pprint
-import pasco
+#import pasco
 from Registry import Registry
 import skype_db
 

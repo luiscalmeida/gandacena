@@ -5,7 +5,7 @@ from Registry import Registry
 import recentFiles_4
 import downloadedFiles_5
 import launchedPrograms_6
-
+import physical_location_7 as physloc
 
 class bcolors:
     HEADER = '\033[95m'
@@ -164,7 +164,29 @@ def main():
 			reg = Registry.Registry("./mnt/Users/" + user + "/NTUSER.DAT")
 			launchedPrograms_6.auto_run(reg)
 		elif command == 7:
-			print " "
+			#Need func to ask for user
+                        #reg = Registry.Registry("./mnt/Users/admin11/NTUSER.DAT")
+                        #begin---timezone
+                        reg = Registry.Registry("./mnt/Windows/System32/config/SYSTEM")
+                        res = physloc.timezone_settings("./mnt/Windows/System32/config/SYSTEM")
+                        for e in res:
+                                print(e)
+                        #begin---network history
+                        physloc.network_history(reg)
+                        #begin cookies
+                        res = physloc.cookies(user)
+                        if not res:
+                                print("No Cookies found")
+                        else:
+                                print("Cookies in file: " + res)
+                        #begin browser search
+                        physloc.browser_search(user)
+                        if not res:
+                                print("No History Found")
+                        else:
+                                for e in res:
+                                        print(res)
+                        print " "
 		elif command == 8:
 			print " "
 		elif command == 9:
