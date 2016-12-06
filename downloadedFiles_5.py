@@ -81,4 +81,6 @@ def downloads_FF(reg, user): #downloads.sqlite
 	print " "
 	print "***** DOWNLOADS FIREFOX *****"
 	print " "
+	random_dir = os.listdir("./mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles")
+	firefox_db_downloads("./mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles" + random_dir[0] + "/places.sqlite")
 	# %userprofile%\AppData\Roaming\Mozilla\Firefox\Profiles\<random text>.default\downloads.sqlite	

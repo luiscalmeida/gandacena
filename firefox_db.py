@@ -1,34 +1,56 @@
 import sqlite3
 import sys
+import os
 
-def skype_db_contacts(path):
-	conn = sqlite3.connect('../main.db')
+def firefox_db_visited_urls(path):  # places.sqlite
+	conn = sqlite3.connect(path)
 	c = conn.cursor()
-	contacts = c.execute("SELECT * FROM 'Contacts'")
+	contacts = c.execute("SELECT * FROM 'moz_places'")
 	for row in c.fetchall():
-		sys.stdout.write(row[3])
-		if len(row[3]) > 23:
-			sys.stdout.write(" \t: ")
-		elif len(row[3]) >= 15:
-			sys.stdout.write(" \t\t: ")
-		elif len(row[3]) < 7:
-			sys.stdout.write(" \t\t\t\t: ")
-		else:	
-			sys.stdout.write(" \t\t\t: ")
-		if not row[6] is None:
-			sys.stdout.write(row[6].encode('utf-8', 'ignore'))
-		if not row[15] is None:
-			sys.stdout.write(" \t\t: ")
-			sys.stdout.write(str(row[15]))
-		sys.stdout.write("\n")
+		print row[1]
 	conn.close()
 
-def skype_db_transfers(path):
-	conn = sqlite3.connect('../main.db')
+def firefox_db_typed_urls(path):  # places.sqlite
+	conn = sqlite3.connect(path)
 	c = conn.cursor()
-	contacts = c.execute("SELECT * FROM 'Transfers'")
+	contacts = c.execute("SELECT * FROM 'moz_inputhistory'")
 	for row in c.fetchall():
-		print row
+		print row[1]
 	conn.close()
 
-#skype_db_transfers("../main.db")
+## needed to cross moz_places with moz_historyvisits, too complicated
+def firefox_db_visit_numb(path):  # places.sqlite
+	conn = sqlite3.connect(path)
+	c = conn.cursor()
+	contacts = c.execute("SELECT * FROM 'moz_historyvisits'")
+	for row in c.fetchall():
+		print row[0]
+	conn.close()
+
+def firefox_db_bookmarks(path):  # places.sqlite
+	bookmarks = []
+	conn = sqlite3.connect(path)
+	c = conn.cursor()
+	contacts = c.execute("SELECT * FROM 'moz_bookmarks'")
+	for row in c.fetchall():
+		if not row[5] in bookmarks:
+			bookmarks.append(row[5])
+			print row[5]
+	conn.close()
+
+def firefox_db_downloads(path):  # places.sqlite
+	index = 0
+	conn = sqlite3.connect(path)
+	c = conn.cursor()
+	contacts = c.execute("SELECT lastModified FROM 'moz_annos'")
+	for row in c.fetchall():
+		if index % 3 == 0:
+			print row[4]
+		index = index + 1
+	conn.close()
+
+#firefox_db_visited_urls("../places.sqlite")
+#firefox_db_typed_urls("../places.sqlite")
+#firefox_db_visit_numb("../places.sqlite")
+#firefox_db_bookmarks("../places.sqlite")
+#firefox_db_downloads("../places.sqlite")

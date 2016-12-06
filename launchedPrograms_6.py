@@ -38,7 +38,7 @@ def last_visited_MRU(reg):
 	print " "
 	key = open_key(reg, "Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\LastVisitedMRU")
 	print_values(key)
-	#NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\LastVisitedMRU
+	# NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\LastVisitedMRU
 
 
 #Start -> Run commands executed
