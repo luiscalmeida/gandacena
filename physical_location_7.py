@@ -31,17 +31,6 @@ def open_key(reg, path):
 #
 #CODE
 #
-def timezone(reg):
-	print("Timezone Information")
-	path_key = "SYSTEM\CurrentControlSet\Control\TimeZoneInformation"
-	path_key2 = "SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones"
-	
-	key = open_key(reg,path_key2)
-	#print_keys(reg.root())
-	#print_values(key)
-
-	print("--------------------")
-
 def control_set_check(sys_reg): 
     	"""
     	Determine which Control Set the system was using
@@ -145,7 +134,7 @@ def browser_search(user):
 	if files1:
 		for e in files1:
 			if "index" in e:
-				infile =open(path_h1,"r")
+				infile =open(e,"r")
 				for line in infile:
     					arr=line.split("Cho")
 
@@ -156,7 +145,7 @@ def browser_search(user):
 	if files2:
 		for e in files2:
 			if "index" in e:
-				infile =open(path_h2,"r")
+				infile =open(e,"r")
                 		for line in infile:
                         		arr=line.split("Cho")
 
