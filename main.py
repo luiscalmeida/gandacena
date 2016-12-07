@@ -6,6 +6,8 @@ import recentFiles_4
 import downloadedFiles_5
 import launchedPrograms_6
 import physical_location_7 as physloc
+import account_usage_8 as accman
+
 
 class bcolors:
     HEADER = '\033[95m'
@@ -208,6 +210,10 @@ def main():
 	                                        print(res)
 	                        print " "
 			elif command == 8:
+				accman.show_logons("./mnt/Windows/System32/winevt/Logs/Security.evtx")
+
+				reg = Registry.Registry("./mnt/Windows/System32/config/SAM")
+				accman.show_logtimes(reg)
 				print " "
 			elif command == 9:
 				print " "
