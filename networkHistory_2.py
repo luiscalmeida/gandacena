@@ -75,18 +75,26 @@ def network_history(reg):
 	try:
 		global aux
 		aux = 0
+		global nodate
+		nodate = 1
 		key = reg.open("Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles")
 		print("All networks connected by the user:")
 		for conn in key.subkeys():
 			aux = 0
+			nodate = 1
 			for v in conn.values():
 				if v.name() == "ProfileName":
 					print success + "SSID: %s" % (v.value())
 					aux = 1
 				if v.name() == "DateCreated":
 					print "   First Time Connected: %s" % (parse_date(v))
+					nodate = 0
 				if v.name() == "DateLastConnected":
 					print "   Last Time Connected: %s" % (parse_date(v))
+					nodate = 0
+			if nodate == 1:
+				print "   First Time Connected: No information!"
+				print "   Last Time Connected: No information!"
 		print " "
 	except:
 		print fail + "No Profiles file"
