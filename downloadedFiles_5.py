@@ -44,6 +44,8 @@ def open_save_MRU(reg):
 	print plus + "NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\OpenSavePIDlMRU"
 	print("---------------------------------------")
 	try:
+		i = []
+		i.append(0)
 		key = open_key(reg, "Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\OpenSavePIDlMRU")
 		files = ""
 		word = ""
@@ -59,6 +61,7 @@ def open_save_MRU(reg):
 				word = ""
 		for f in files.split("%"):
 			if("." in f and len(f)>2 and len(f.split(".")) > 2):
+				i[0] += 1
 				print success + f
 				"""for a in f:
 					if (a == "" or a == " ") and index == 0:
@@ -68,6 +71,8 @@ def open_save_MRU(reg):
 					index = index + 1
 				index = 0
 				sys.stdout.write("\n")"""
+		if i[0] == 0:
+			print "No Recently used files within a windows shell dialog box"
 	except:
 		print fail + "No OpenSavePidlMRU key"
 	print " "
@@ -96,16 +101,16 @@ def skype_history(reg, user):
 	print plus + "C:\Users\<username>\AppData\Roaming\Skype\<skype-name>\main.db"
 	print("---------------------------------------")
 	try:
-		"""for entry in os.listdir("./mnt/Users/" + user + "/AppData/Roaming/Skype"):
+		skype_dir = "./mnt/Users/" + user + "/AppData/Roaming/Skype"
+		for entry in os.listdir(skype_dir):
 			if entry != "Content" and entry != "DataRv" and entry != "My Skype Received Files" \
 			and entry != "RootTools" and entry != "shared.lck" and entry != "shared.xml" \
 			and entry != "shared_dynco" and entry != "shared_httpfe":
-				skype_name = entry"""
-		skype_name = "wekerpie"
-		skype_db.skype_db_contacts("../AppData_L/Roaming/Skype/" + skype_name + "/main.db")
-		skype_db.skype_db_transfers("../AppData_L/Roaming/Skype/" + skype_name + "/main.db")
-		#skype_db.skype_db_contacts("./mnt/Users/" + user + "/AppData/Roaming/Skype/" + skype_name + "/main.db")
-		#skype_db.skype_db_transfers("./mnt/Users/" + user + "/AppData/Roaming/Skype/" + skype_name + "/main.db")
+				skype_name = entry
+		print "Contacts:"
+		skype_db.skype_db_contacts(skype_dir + "/" + skype_name + "/main.db")
+		print "Transfers:"
+		skype_db.skype_db_transfers(skype_dir + "/" + skype_name + "/main.db")
 	except:
 		print fail + "No Skype Directory"
 	print " "
@@ -120,11 +125,11 @@ def downloads_IE(reg, user): #index.dat file
 	print("---------------------------------------")
 	try:
 		ip = pasco.IndexParser()
-		for match in ip.parse("../AppData_M/Local/Microsoft/Windows/History/History.IE5/index.dat"):
+		for match in ip.parse(".mnt/Users/" + user + "/AppData/Local/Microsoft/Windows/History/History.IE5/index.dat"):
 			if match:
 				pprint(match)
 	except:
-		print "No index.dat file"
+		print fail + "No index.dat file"
 	print " "
 	# %userprofile%\AppData\Local\Microsoft\Windows\History\History.IE5 
 	# %userprofile%\AppData\Local\Microsoft\Windows\History\Low\History.IE5 
@@ -137,8 +142,8 @@ def downloads_FF(reg, user): #downloads.sqlite
 	print plus + "C:\Users\<username>\AppData\Roaming\Mozilla\Firefox\Profiles\<random text>.default\downloads.sqlite"
 	print("---------------------------------------")
 	try:
-		random_dir = os.listdir("../AppData_L/Roaming/Mozilla/Firefox/Profiles")
-		firefox_db.firefox_db_downloads("../AppData_L/Roaming/Mozilla/Firefox/Profiles/" + random_dir[0] + "/places.sqlite")
+		random_dir = os.listdir(".mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles")
+		firefox_db.firefox_db_downloads(".mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles/" + random_dir[0] + "/places.sqlite")
 		#random_dir = os.listdir("./mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles")
 		#firefox_db_downloads("./mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles/" + random_dir[0] + "/places.sqlite")
 	except:

@@ -5,20 +5,6 @@ from Registry import Registry
 
 ################################ UTILS ################################
 
-def print_values(key):
-	for value in [v for v in key.values()]:
-		if v.value_type() == Registry.RegSZ or v.value_type() == Registry.RegExpandSZ:
-			print success + "%s = %s" % (value.name(), value.value())
-
-def open_key(reg, path):
-	try:
-		return reg.open(path)
-	except Registry.RegistryKeyNotFoundException:
-		print(fail + "Can't find any keys")
-
-#######################################################################
-#######################################################################
-
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -41,6 +27,71 @@ def control_set_check(reg):
 		if v.name() == "Current":
 			return v.value()
 
+def reg_format_value_bin(value):
+    ret = []
+    s = ",".join(["%02x" % (ord(c)) for c in value.value()])
+    if value.value_type() == Registry.RegBin:
+        s = "hex:" + s
+    else:
+        s = "hex(%d):" % (value.value_type()) + s
+    # there might be an off by one error in here somewhere...
+    name_len = len(value.name()) + 2 + 1  # name + 2 * '"' + '='
+    split_index = 80 - name_len
+    while len(s) > 0:
+        if len(s) > split_index:
+            # split on a comma
+            while s[split_index] != ",":
+                split_index -= 1
+            ret.append(s[:split_index + 1] + "\\")
+            s = "  " + s[split_index + 1:]
+        else:
+            ret.append(s)
+            s = ""
+        split_index = 80
+    return "\r\n".join(ret)
+
+def print_values(key):  # ADD INDEX
+	for value in [v for v in key.values()]:
+		if v.value_type() == Registry.RegSZ or v.value_type() == Registry.RegExpandSZ:
+			print success + "%s = %s" % (value.name(), value.value())
+
+def print_values_fail_tab(key, name):  # ADD INDEX
+	index = []
+	index.append(0)
+	for value in [v for v in key.values()]:
+		if v.value_type() == Registry.RegSZ or v.value_type() == Registry.RegExpandSZ:
+			print "    " + success + "%s = %s" % (value.name(), value.value())
+			index[0] += 1
+	if index[0] == 0:
+		print "    " + fail + name
+
+def print_values_fail(key, name):  # ADD INDEX
+	index = []
+	index.append(0)
+	for value in [v for v in key.values()]:
+		if v.value_type() == Registry.RegSZ or v.value_type() == Registry.RegExpandSZ:
+			print "    " + success + "%s = %s" % (value.name(), value.value())
+			index[0] += 1
+	if index[0] == 0:
+		print fail + name
+
+def open_key(reg, path):
+	try:
+		return reg.open(path)
+	except Registry.RegistryKeyNotFoundException:
+		print(fail + "Can't find any keys")
+
+def open_key_tab(reg, path):
+	try:
+		return reg.open(path)
+	except Registry.RegistryKeyNotFoundException:
+		print "\t" + bcolors.FAIL + "[-]" + bcolors.ENDC + "Can't find any keys"
+		return False
+		#sys.exit(-1)
+
+#######################################################################
+#######################################################################
+
 # tracks GUI-based programs launched from the desktop
 def user_assist(reg):
 	print (bcolors.BOLD + ("=" * 24) + " USER ASSIST " + ("=" * 24))
@@ -49,7 +100,7 @@ def user_assist(reg):
 	print("---------------------------------------")
 	try:
 		key = open_key(reg, "Software\Microsoft\Windows\CurrentVersion\Explorer\UserAssist")
-		print_values(key)
+		print_values_fail(key, "No executables on User Assist")
 	except:
 		print fail + "No UserAssist key"
 	print " "
@@ -62,13 +113,31 @@ def last_visited_MRU(reg):
 	print bcolors.ENDC + "Searching in:"
 	print plus + "NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\LastVisitedMRU"
 	print("---------------------------------------")
-	try:
-		key = open_key(reg, "Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\LastVisitedMRU")
-		for value in key.values():
-			print success + value
-	except:
-		print fail + "No LastVisitedMRU key"
-	print " "
+	#try:
+	result = []
+	index = []
+	index.append(0)
+	word = ""
+	key = open_key(reg, "Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\LastVisitedPidlMRU")
+	for value in key.values():
+		for letter in value.value():
+			if ord(letter) > 126 or ord(letter) < 32:
+				pass
+			else:
+				word += letter
+		result.append(word)
+		word = ""
+	for i in result:
+		if "exe" in i:
+			str = i.split(".")
+			if str[1].startswith("exe"):
+				print success + str[0] + ".exe"
+				index[0] += 1
+	if index[0] == 0:
+		print fail + "No executables on LastVisitedMRU"
+	#except:
+	#	print fail + "No LastVisitedMRU key"
+	#print " " 
 	# NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\LastVisitedMRU
 
 
@@ -79,8 +148,8 @@ def run_MRU(reg):
 	print plus + "NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU"
 	print("---------------------------------------")
 	try:	
-		key = open_key(reg, "Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU")
-		#print_values(key)
+		key = open_key_tab(reg, "Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU")
+		print "RunMRU services in order (first is most recently ran):"
 		order = []
 		string = []
 		i = []
@@ -101,51 +170,6 @@ def run_MRU(reg):
 	print " "
 	# NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU
 
-
-def reg_format_value_bin(value):
-    """
-    result should look like the following (after the '='):
-     "ProductLocalizedName"=hex:40,00,25,00,50,00,72,00,6f,00,67,00,72,00,61,00,\
-       6d,00,46,00,69,00,6c,00,65,00,73,00,25,00,5c,00,57,00,69,00,6e,00,64,00,6f,\
-       00,77,00,73,00,20,00,44,00,65,00,66,00,65,00,6e,00,64,00,65,00,72,00,5c,00,\
-       45,00,70,00,70,00,4d,00,61,00,6e,00,69,00,66,00,65,00,73,00,74,00,2e,00,64,\
-       00,6c,00,6c,00,2c,00,2d,00,31,00,30,00,30,00,30,00,00,00
-    so we:
-      - format into one big line of hex
-      - search for places to split, at about 80 chars or less
-      - split, with the former receiving a backslash, and the latter getting the
-         prefixed whitespace
-    if the type of value is RegBin, then we use the type prefix "hex:",
-    otherwise, the type prefix is "hex(%d):" where %d is the value_type constant.
-    eg. RegExpandSZ is "hex(3)"
-    @rtype: str
-    """
-    ret = []
-
-    s = ",".join(["%02x" % (ord(c)) for c in value.value()])
-
-    if value.value_type() == Registry.RegBin:
-        s = "hex:" + s
-    else:
-        s = "hex(%d):" % (value.value_type()) + s
-
-    # there might be an off by one error in here somewhere...
-    name_len = len(value.name()) + 2 + 1  # name + 2 * '"' + '='
-    split_index = 80 - name_len
-    while len(s) > 0:
-        if len(s) > split_index:
-            # split on a comma
-            while s[split_index] != ",":
-                split_index -= 1
-            ret.append(s[:split_index + 1] + "\\")
-            s = "  " + s[split_index + 1:]
-        else:
-            ret.append(s)
-            s = ""
-        split_index = 80
-
-    return "\r\n".join(ret)
-
 # tracks executables (for identification of compatibility issues purposes)
 def app_compatibility_cache(reg, path):
 	print (bcolors.BOLD + ("=" * 24) + " APP COMPATIBILITY CACHE " + ("=" * 24))
@@ -156,8 +180,35 @@ def app_compatibility_cache(reg, path):
 		current_control_set = "ControlSet00%s" % control_set_check(path)
 		p = "%s\Control\Session Manager\AppCompatCache" % current_control_set
 		key = reg.open(p)
+		result = []
 		for v in key.values():
-			print success + reg_format_value_bin(v)
+			if(v.name() == "AppCompatCache"):
+				word = ""
+				for letter in v.value():
+					if ord(letter) > 122 or ord(letter) < 45:
+						pass
+					else:
+						word += letter
+				#print word #+ reg_format_value_bin(v)
+				final_word = ""
+				ind = []
+				ind.append(0)
+				for w in word.split(".exe"):
+					for l in w[::-1]:
+						if ind[0] == 0:
+							if l == ":":
+								ind[0] += 1
+								final_word += l
+							else:
+								final_word += l
+						else:
+							final_word += l
+							break
+					ind[0] = 0
+					result.append(final_word[::-1] + ".exe")
+					final_word = ""
+				for r in result:
+					print success + r
 	except:
 		print fail + "No AppCompatCache key"
 	print " "
@@ -171,8 +222,13 @@ def jump_lists(reg, user):
 	print plus + "C:\Users\<user>\AppData\Roaming\Microsoft\Windows\Recent\AutomaticDestinations"
 	print("---------------------------------------")
 	try:
+		index = []
+		index.append(0)
 		for entry in os.listdir("./mnt/Users/" + user + "/AppData/Roaming/Microsoft/Windows/Recent/AutomaticDestinations"):
 			print success + entry
+			index[0] += 1
+		if index[0] == 0:
+			print "    " + fail + "No Jump List files"
 	except:
 		print fail + "No AutomaticDestinations folder"
 	print " "
@@ -220,16 +276,20 @@ def auto_run(reg):
 	print plus + "NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\RunOnce"
 	print("---------------------------------------")
 	try:
+		index = []
+		index.append(0)
+		index.append(0)
 		key = open_key(reg, "Software\Microsoft\Windows\CurrentVersion\Run")
-		print_values(key)
-		print " "
+		print "Run:"
+		print_values_fail_tab(key, "No Auto Run files on Run")
 	except:
-		print fail + "No Run key"
+		print "    " + fail + "No Run key"
 	try:
 		key = open_key(reg, "Software\Microsoft\Windows\CurrentVersion\RunOnce")
-		print_values(key)
+		print "Run Once:"
+		print_values_fail_tab(key, "No Auto Run files on RunOnce")
 	except:
-		print fail + "No RunOnce key"
+		print "    " + fail + "No RunOnce key"
 	print " "
 
 	# HKLM\Software\Microsoft\Windows\CurrentVersion\Runonce

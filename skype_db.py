@@ -14,7 +14,9 @@ class bcolors:
 success = bcolors.BOLD + bcolors.OKGREEN + "[-]" + bcolors.ENDC
 
 def skype_db_contacts(path):
-	conn = sqlite3.connect('../main.db')
+	index = []
+	index.append(0)
+	conn = sqlite3.connect(path)
 	c = conn.cursor()
 	contacts = c.execute("SELECT * FROM 'Contacts'")
 	for row in c.fetchall():
@@ -28,15 +30,18 @@ def skype_db_contacts(path):
 		else:	
 			sys.stdout.write(" \t\t\t: ")
 		if not row[6] is None:
+			index[0] += 1
 			sys.stdout.write(row[6].encode('utf-8', 'ignore'))
 		if not row[15] is None:
 			sys.stdout.write(" \t\t: ")
 			sys.stdout.write(str(row[15]))
 		sys.stdout.write("\n")
 	conn.close()
+	if index[0] == 0:
+		print fail + "No Skype contacts"
 
 def skype_db_transfers(path):
-	conn = sqlite3.connect('../main.db')
+	conn = sqlite3.connect(path)
 	c = conn.cursor()
 	contacts = c.execute("SELECT * FROM 'Transfers'")
 	for row in c.fetchall():

@@ -2,6 +2,9 @@ import sys
 import os
 from Registry import Registry
 
+import systemInformation_1
+import networkHistory_2
+import usbDevices_3
 import recentFiles_4
 import downloadedFiles_5
 import launchedPrograms_6
@@ -113,6 +116,9 @@ def rec(key, depth=0):
 def main():
 	greeting()
 	user = str(get_user())
+	software="./mnt/Windows/System32/config/SOFTWARE"
+	system="./mnt/Windows/System32/config/SYSTEM"
+	ntuser="./mnt/Users/" + user + "/NTUSER.DAT"
 	while True:
 		menu()
 		prompt()
@@ -123,36 +129,25 @@ def main():
 				print " "
 				help()
 			elif command == 1:
-				regabrir = raw_input()
-				#exemplo de input para dar:
-				#./mnt/Users/admin11/NTUSER.DAT
-
-				reg = Registry.Registry(regabrir)
-				#abre registo e imprime todas as keys
-				#rec(reg.root())
+				print " "
+				reg = Registry.Registry(software)
+				systemInformation_1.system_information(reg)
 				print " "
 			elif command == 2:
 				print " "
-				yoyo = raw_input()
-				#com input ./mnt/Users/admin11/NTUSER.DAT
-				reg = Registry.Registry(yoyo)
-				try:
-					#usei o 1 para imprimir as keys e saquei uma a toa de la
-	    				key = reg.open("System\CurrentControlSet\Control\Network\NetworkLocationWizard")
-				except Registry.RegistryKeyNotFoundException:
-					print("Fuck you")
-					sys.exit(-1)
-				for value in [v for v in key.values()]: 
-					#if v.value_type() == Registry.RegSZ or v.value_type() == Registry.RegExpandSZ:
-	    				print "%s %s" % (value.name(),value.value())
+				reg = Registry.Registry(software)
+				networkHistory_2.network_history(reg)
+				print " "
 			elif command == 3:
+				print " "
+				reg = Registry.Registry(system)
+				usbDevices_3.plugged_devices(reg, system)
 				print " "
 			elif command == 4:
 				print " "
-				#reg = Registry.Registry("../NTUSER.DAT")
-				
-				reg = Registry.Registry("./mnt/Users/" + user + "/NTUSER.DAT")
-				recentFiles_4.recent_files(reg)
+				reg = Registry.Registry(ntuser)	
+				#reg = Registry.Registry("./mnt/Users/" + user + "/NTUSER.DAT")
+				recentFiles_4.recent_files(reg, user)
 				recentFiles_4.office_recent_files(reg)
 				recentFiles_4.shell_bags(reg)
 				recentFiles_4.shortcut_files(reg, user)
@@ -160,7 +155,7 @@ def main():
 				print " "
 			elif command == 5:
 				print " "
-				reg = Registry.Registry("../NTUSER.DAT")
+				reg = Registry.Registry(ntuser)
 				#reg = Registry.Registry("./mnt/Users/" + user + "/NTUSER.DAT")
 				downloadedFiles_5.open_save_MRU(reg)
 				downloadedFiles_5.email_attachments(reg, user)
@@ -169,44 +164,44 @@ def main():
 				downloadedFiles_5.downloads_FF(reg, user)
 				print " "
 			elif command == 6:
-				reg = Registry.Registry("../NTUSER.DAT")
-				#reg = Registry.Registry("./mnt/Users/" + user + "/NTUSER.DAT")
+				reg = Registry.Registry(ntuser)
+					#reg = Registry.Registry("./mnt/Users/" + user + "/NTUSER.DAT")
 				launchedPrograms_6.user_assist(reg)
 				launchedPrograms_6.last_visited_MRU(reg)
 				launchedPrograms_6.run_MRU(reg)
-				reg = Registry.Registry("../regBackup/SYSTEM")
-				#reg = Registry.Registry("./mnt/Windows/System32/config/SYSTEM")
-				launchedPrograms_6.app_compatibility_cache(reg, "../regBackup/SYSTEM")
+				reg = Registry.Registry(system)
+					#reg = Registry.Registry("./mnt/Windows/System32/config/SYSTEM")
+				launchedPrograms_6.app_compatibility_cache(reg, system)
 				launchedPrograms_6.jump_lists(reg, user)
 				launchedPrograms_6.prefetch(reg)
-				reg = Registry.Registry("../NTUSER.DAT")
-				#reg = Registry.Registry("./mnt/Users/" + user + "/NTUSER.DAT")
+				reg = Registry.Registry(ntuser)
+					#reg = Registry.Registry("./mnt/Users/" + user + "/NTUSER.DAT")
 				launchedPrograms_6.auto_run(reg)
 				print " "
 			elif command == 7:
 				#Need func to ask for user
-	                        #reg = Registry.Registry("./mnt/Users/admin11/NTUSER.DAT")
-	                        #begin---timezone
-	                        reg = Registry.Registry("./mnt/Windows/System32/config/SYSTEM")
-	                        res = physloc.timezone_settings("./mnt/Windows/System32/config/SYSTEM")
-	                        for e in res:
-	                                print(e)
-	                        #begin---network history
-	                        physloc.network_history(reg)
-	                        #begin cookies
-	                        res = physloc.cookies(user)
-	                        if not res:
-	                                print("No Cookies found")
-	                        else:
-	                                print("Cookies in file: " + res)
-	                        #begin browser search
-	                        physloc.browser_search(user)
-	                        if not res:
-	                                print("No History Found")
-	                        else:
-	                                for e in res:
-	                                        print(res)
-	                        print " "
+                #reg = Registry.Registry("./mnt/Users/admin11/NTUSER.DAT")
+                #begin---timezone
+				reg = Registry.Registry("./mnt/Windows/System32/config/SYSTEM")
+				res = physloc.timezone_settings("./mnt/Windows/System32/config/SYSTEM")
+				for e in res:
+					print(e)
+				#begin---network history
+				physloc.network_history(reg)
+				#begin cookies
+				res = physloc.cookies(user)
+				if not res:
+					print("No Cookies found")
+				else:
+					print("Cookies in file: " + res)
+				#begin browser search
+				physloc.browser_search(user)
+				if not res:
+					print("No History Found")
+				else:
+					for e in res:
+						print(res)
+				print " "
 			elif command == 8:
 				print " "
 			elif command == 9:

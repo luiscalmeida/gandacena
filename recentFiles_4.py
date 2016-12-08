@@ -1,5 +1,6 @@
 import sys
 import os
+import firefox_db
 from Registry import Registry
 
 ################################ UTILS ################################
@@ -24,6 +25,22 @@ def open_key(reg, path):
 		return reg.open(path)
 	except Registry.RegistryKeyNotFoundException:
 		print bcolors.FAIL + "[-]" + bcolors.ENDC + "Can't find any keys"
+		return False
+		#sys.exit(-1)
+
+def open_key_tab(reg, path):
+	try:
+		return reg.open(path)
+	except Registry.RegistryKeyNotFoundException:
+		print "\t" + bcolors.FAIL + "[-]" + bcolors.ENDC + "Can't find any keys"
+		return False
+		#sys.exit(-1)
+
+def open_key_false(reg, path):
+	try:
+		return reg.open(path)
+	except Registry.RegistryKeyNotFoundException:
+		return False
 		#sys.exit(-1)
 
 #######################################################################
@@ -35,40 +52,61 @@ fail = bcolors.BOLD + bcolors.FAIL + "[-]" + bcolors.ENDC
 success = bcolors.BOLD + bcolors.OKGREEN + "[-]" + bcolors.ENDC
 
 # tracks last files and folders opened (used to populate "Recent" menu on Start Menu)
-def recent_files(reg):
+def recent_files(reg, user):
 	print (bcolors.BOLD + ("=" * 24) + " RECENT FILES " + ("=" * 24))
 	print bcolors.ENDC + "Searching in:"
 	print plus + "NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs"
 	print("---------------------------------------")
+		
 	try:
 		key = open_key(reg, "Software\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs")
 		for v in key.subkeys():
-			for vv in v.subkeys():
-				print success + vv.name()
+			print success + v.name() + ":"
+			for vv in v.values():
+				print  "\t" + success + vv.name()  #should be value if we could convert binary to string
 	except:
 		print fail + "No RecentDocs key"
-	print " "
-	#print_values(key)
+	print " " 
+	
+	"""try:
+		counter=[]
+		counter.append(0)
+		for entry in os.listdir("./mnt/Users/" + user + "/Recent"):
+			if entry != "AutomaticDestinations" and entry != "CustomDestinations"\
+			and not entry.endswith(".ini") and not entry.endswith(".lnk"):  #exclude these folders
+				counter[0] += 1
+				print success + entry
+		if counter[0] == 0:
+			print fail + "No recent documents"
+	except:
+		print fail + "No Recent folder"
+	print " " """
 	# NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs
-	print " "
 
 # recent files opened with office tools
 def office_recent_files(reg):
 	print (bcolors.BOLD + ("=" * 24) + " OFFICE RECENT FILES " + ("=" * 24))
 	print bcolors.ENDC + "Searching in:"
-	print plus + "NTUSER.DAT\Software\Microsoft\Office\VERSION\Word\Data"
-	print plus + "NTUSER.DAT\Software\Microsoft\Office\VERSION\Excel\Recent Files"
+	print plus + "NTUSER.DAT\Software\Microsoft\Office\VERSION\Word\File MRU"
+	print plus + "NTUSER.DAT\Software\Microsoft\Office\VERSION\PowerPoint\File MRU"
 	print("---------------------------------------")
 	try:
 		key = open_key(reg, "Software\Microsoft\Office")
 		for v in key.subkeys():
-			#print v.name()
-			key = open_key(reg, "Software\\Microsoft\\Office\\" + v.name() + "\\Word\\Data")
-			for v in key.values():
-				print success + v.name()
-			key = open_key(reg, "Software\\Microsoft\\Office\\" + v.name() + "\\Excel\\Recent Files")
-			for v in key.values():
-				print success + v.name()
+			if v.name().startswith("0") or v.name().startswith("1") or v.name().startswith("2"):
+				print "Version " + v.name()
+				key1 = open_key_false(reg, "Software\Microsoft\Office\\" + str(v.name()) + "\Word\File MRU")
+				if key1 != False:
+					print "    " + success + "Word:"
+					for v in key1.values():
+						print "\t" + success + v.value().split("*")[1]
+				key2 = open_key_false(reg, "Software\Microsoft\Office\\" + str(v.name()) + "\PowerPoint\File MRU")
+				if key2 != False:	
+					print "    " + success + "PowerPoint:"
+					for v in key2.values():
+						print "\t" + success + v.value().split("*")[1]
+				if(key1 == False and key2 == False):
+					print "    " + fail + "No documents found on Office " + v.name()
 	except:
 		print fail + "Deprecated method on this version of Office"
 	print " "
@@ -105,7 +143,7 @@ def shortcut_files(reg, user):
 	# os.chdir("./mnt/Users/admin11/AppData/Roaming/Microsoft/Windows/Recent")
 	try:
 		for entry in os.listdir("./mnt/Users/" + user + "/AppData/Roaming/Microsoft/Windows/Recent"):
-			if entry != "AutomaticDestinations" and entry != "CustomDestinations":  #exclude these folders
+			if entry.endswith(".lnk"):  #exclude these folders
 				print success + entry
 	except:
 		print fail + "No Recent folder"
@@ -119,9 +157,32 @@ def recent_browser_files(reg, user):
 	print (bcolors.BOLD + ("=" * 24) + " RECENT BROWSER FILES " + ("=" * 24))
 	print bcolors.ENDC + "Searching in:"
 	print plus + "C:\Users\\" + user + "\AppData\Local\Microsoft\Windows\History\History.IE5\index.dat"
+	print plus + "C:\Users\<username>\AppData\Roaming\Mozilla\Firefox\Profiles\<random text>.default\downloads.sqlite"
 	print("---------------------------------------")
-
-
+	print "Firefox:"
+	try:
+		random_dir = os.listdir(".mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles")
+		firefox_db.firefox_db_files(".mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles/" + random_dir[0] + "/places.sqlite")
+	except:
+		print "    " + fail + "No Mozilla Firefox installed"
+	try:
+		result = []
+		counter = []
+		counter.append(0)
+		print "Internet Explorer:"
+		key = open_key(reg, "Software\Microsoft\Internet Explorer\TypedURLs")
+		for v in key.values():
+			result.append(v.value())
+		for vv in result:
+			if vv.startswith("file:\\\\"):
+				counter[0] = counter[0] + 1
+		if counter[0] != 0:
+			for vvv in result:
+				print "    " + success + vvv
+		else:
+			print "    " + fail + "No files opened on the browser"
+	except:
+		print fail + "No TypedURLs key"
 	print " "
 	# %userprofile%\AppData\Local\Microsoft\Windows\History\History.IE5\index.dat
 
