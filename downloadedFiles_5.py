@@ -62,7 +62,8 @@ def open_save_MRU(reg):
 		for f in files.split("%"):
 			if("." in f and len(f)>2 and len(f.split(".")) > 2):
 				i[0] += 1
-				print success + f
+				if not "*" in f:
+					print success + f	
 				"""for a in f:
 					if (a == "" or a == " ") and index == 0:
 						pass
@@ -89,7 +90,7 @@ def email_attachments(reg, user):
 			if entry.endswith(".pst"):
 				print success + entry
 	except:
-		print fail + "No Outlook folder"
+		print fail + "No Outlook installed"
 	print " "
 	# %USERPROFILE%\AppData\Local\Microsoft\Outlook 
 
@@ -141,12 +142,12 @@ def downloads_FF(reg, user): #downloads.sqlite
 	print bcolors.ENDC + "Searching in:"
 	print plus + "C:\Users\<username>\AppData\Roaming\Mozilla\Firefox\Profiles\<random text>.default\downloads.sqlite"
 	print("---------------------------------------")
-	try:
-		random_dir = os.listdir(".mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles")
-		firefox_db.firefox_db_downloads(".mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles/" + random_dir[0] + "/places.sqlite")
+	#try:
+	random_dir = os.listdir("./mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles")
+	firefox_db.firefox_db_downloads("./mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles/" + random_dir[0] + "/places.sqlite")
 		#random_dir = os.listdir("./mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles")
 		#firefox_db_downloads("./mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles/" + random_dir[0] + "/places.sqlite")
-	except:
-		print fail + "No Mozilla\Firefox Directory"
-	print " "
+	#except:
+	#	print fail + "No Mozilla\Firefox Directory"
+	#print " "
 	# %userprofile%\AppData\Roaming\Mozilla\Firefox\Profiles\<random text>.default\downloads.sqlite	

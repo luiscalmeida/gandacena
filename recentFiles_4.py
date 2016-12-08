@@ -59,11 +59,30 @@ def recent_files(reg, user):
 	print("---------------------------------------")
 		
 	try:
+		global var
+		var = ""
+		global word
+		word = ""
 		key = open_key(reg, "Software\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs")
 		for v in key.subkeys():
 			print success + v.name() + ":"
 			for vv in v.values():
-				print  "\t" + success + vv.name()  #should be value if we could convert binary to string
+				word = ""
+				if not vv.name() == "MRUListEx":
+					for l in vv.value():
+						if ord(l) > 122 and ord(l) < 45:
+							word += ""
+						else:
+							word += l
+					var = ""
+					for block in word.split("*"):
+						#print block
+						var = block
+						var = var[:-14]
+					if not "." in var and v.name() != "Folder":
+						var = var + v.name()
+					#if var.endswith(v.name()):
+					print  "\t" + success + var  #should be value if we could convert binary to string
 	except:
 		print fail + "No RecentDocs key"
 	print " " 
@@ -91,7 +110,7 @@ def office_recent_files(reg):
 	print plus + "NTUSER.DAT\Software\Microsoft\Office\VERSION\PowerPoint\File MRU"
 	print("---------------------------------------")
 	try:
-		key = open_key(reg, "Software\Microsoft\Office")
+		key = open_key_false(reg, "Software\Microsoft\Office")
 		for v in key.subkeys():
 			if v.name().startswith("0") or v.name().startswith("1") or v.name().startswith("2"):
 				print "Version " + v.name()
@@ -108,7 +127,7 @@ def office_recent_files(reg):
 				if(key1 == False and key2 == False):
 					print "    " + fail + "No documents found on Office " + v.name()
 	except:
-		print fail + "Deprecated method on this version of Office"
+		print fail + "No Office installed"
 	print " "
 	# NTUSER.DAT\Software\Microsoft\Office\VERSION
 	# NTUSER.DAT\Software\Microsoft\Office\10.0\Excel|Recent Files ..... different for every MS office tool 
@@ -120,16 +139,21 @@ def shell_bags(reg):
 	print plus + "NTUSER.DAT\Software\Microsoft\Windows\Shell\Bags"
 	print("---------------------------------------")
 	try:
+		result = []
+		index = []
+		index.append(0)
 		key = open_key(reg, "Software\Microsoft\Windows\Shell\Bags")
 		for v in key.subkeys():
 			for vv in v.subkeys():
-				print success + vv.name()
+				if not vv.name() in result:
+					index[0] += 1
+					result.append(vv.name())
+					print success + vv.name()
+		if index[0] == 0:
+			print "No Shell\Bags items found"
 	except:
 		print fail + "No Shell\Bags key"
 	print " "
-	#print_values(key)
-	#key = open_key(reg, "Software\Microsoft\Windows\ShellNoRoam\Bags")
-	#print_values(key)
 	# NTUSER.DAT\Software\Microsoft\Windows\Shell\Bags 
 	# NTUSER.DAT\Software\Microsoft\Windows\ShellNoRoam\Bags 
 

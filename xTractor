@@ -133,7 +133,7 @@ then
 		exit 1
 	else
 		echo "Be patient. This can take a few seconds"
-		`guestmount -a $2 -i --ro ./mnt`
+		`guestmount -a $2 -i ./mnt`  #-i --ro
 	fi
 fi
 
