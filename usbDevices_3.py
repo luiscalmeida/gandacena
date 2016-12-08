@@ -57,51 +57,87 @@ def plugged_devices(reg, path):
 	print plus + "SYSTEM\CurrentControlSet\Enum\USBSTOR"
 	print("---------------------------------------")
 	try:
+		print "USBSTOR:"
 		output = []
 		final_output = []
+		line = []
 		global aux
 		aux = 0
+		global noname
+		noname = 1
+		global name
+		name = ""
+		global mfg
+		mfg = ""
+		global contains
+		contains = 0
 		current_control_set = "ControlSet00%s" % control_set_check(path)
 		path = "%s\Enum\USBSTOR" % current_control_set
 		key = reg.open(path)
 		for usbfile in key.subkeys():
 			for v in usbfile.subkeys():
+				aux = 0
+				noname = 1
+				line = []
+				name = ""
+				mfg = ""
 				for k in v.values():
 					if k.name() == "FriendlyName":
-						output.append(success + "Name: " + k.value())
+						name = success + "Name: " + k.value()
 						aux = 1
+						noname = 0
+					if k.name() == "DeviceDesc" and noname == 1:
+						if ";" in k.value():
+							name = success + "Name: " + parse(k.value())
+							aux = 1
+						else:
+							name = success + "Name: " + k.value()
+							aux = 1
 					if k.name() == "Mfg" and aux == 1:
-						output.append("   Manufacturer: " + parse(k.value()))
+						mfg = "   Manufacturer: " + parse(k.value())
+				output.append(name)
+				output.append(mfg)
+	except:
+		print "    " + fail + "No USBSTOR key"
+	print " "
+	try:
+		print "USB:"
 		path = "%s\Enum\USB" % current_control_set
 		key = reg.open(path)
 		for usbfile in key.subkeys():
 			for v in usbfile.subkeys():
+				aux = 0
+				noname = 1
+				line = []
+				name = ""
+				mfg = ""
 				for k in v.values():
-					aux = 0
 					if k.name() == "FriendlyName":
-						if k.value() not in output:
-							output.append(success + "Name: " + k.value())
+						name = success + "Name: " + k.value()
+						aux = 1
+						noname = 0
+					if k.name() == "DeviceDesc" and noname == 1:
+						if ";" in k.value():
+							name = success + "Name: " + parse(k.value())
+							aux = 1
+						else:
+							name = success + "Name: " + k.value()
 							aux = 1
 					if k.name() == "Mfg" and aux == 1:
-							output.append("   Manufacturer: " + parse(k.value()))
-							output.append(" ")
-					if k.name() == "DeviceDesc":
-						if ";" in k.value():
-							if parse(k.value()) not in output:
-								output.append(success + "Name: " + parse(k.value()))
-								aux = 1
-						else:
-							if k.value() not in output:
-								output.append(success + "Name: " + k.value())
-								aux = 1
-					if k.name() == "Mfg":
-						output.append("   Manufacturer: " + parse(k.value()))
+						mfg = "   Manufacturer: " + parse(k.value())
+				output.append(name)
+				output.append(mfg)
 		for entry in output:
-			if entry not in final_output:
+			if "Name" in entry:
+				if entry not in final_output:
+					final_output.append(entry)
+					contains = 1
+			if "Manufacturer" in entry and contains == 1:
 				final_output.append(entry)
+				contains = 0	
 		for v in final_output:
-			print v
+			print "    " + v
 	except:
-		print fail + "No Profiles file"
+		print "    " + fail + "No USB key"
 	print " "
 	#SYSTEM\CurrentControlSet\Enum\USBSTOR
