@@ -6,6 +6,7 @@ from os import listdir
 from os.path import isfile, join
 from string import *
 from binascii import *
+import firefox_db
 
 #
 #------------Key Utils-----------------------
@@ -120,14 +121,14 @@ def cookies(user):
 
 def firefox_history(user): 
 	print(bcolors.BOLD + ("=" * 24) + " FIREFOX HISTORY " + ("=" * 24))
-        print(bcolors.ENDC + "Searching in:")
-        print(plus + "./mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles/<random text>.default/places.sqlite")
-        print("---------------------------------------")
-        try:
-		random_dir = os.listdir("./mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles")
-                firefox_db.firefox_db_visited_urls("./mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles/" + random_dir[0] + "/places.sqlite")
-        except:
-                print fail + "No Mozilla\Firefox Directory"
+	print(bcolors.ENDC + "Searching in:")
+	print(plus + "./mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles/<random text>.default/places.sqlite")
+	print("---------------------------------------")
+    #try:
+	random_dir = os.listdir("./mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles")
+	firefox_db.firefox_db_visited_urls("./mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles/" + random_dir[0] + "/places.sqlite")
+    #except:
+     #       print fail + "No Mozilla\Firefox Directory"
 
 
 def removenonascii(s):

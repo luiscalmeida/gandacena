@@ -1,0 +1,41 @@
+
+            
+
+                /*****************************************\
+                |**************** XTRACTOR ***************|
+                \****************************************/
+
+
+    
+
+    *************************** HELP MENU *******************************
+    
+    Download a test vmdk image here: 
+    https://docs.google.com/uc?id=0B9EDei9pR7JRSEx2NHpMS0pFSnM&export=download
+
+    Or create yours, as long as it is a Windows 7 image.
+
+    Help:
+    1 - Operating system's information as it's version, architecture, etc..
+    2 - SSID(name),  and date of first and last connections to any AP's stored in the system.
+    3 - Names and Manufacturer of USB, external storage devices, input and output devices to the system.
+    4 - Recently opened or modified files of any extension.
+    5 - Recently downloaded files from Firefox, InternetExplorer, Skype or Outlook.
+    6 - Recently executable programs executed on the system.
+    7 - Information about the possible physical location where this system may have been used most of the time.
+    8 - Information about recently log ins or log outs on the system.
+    9 - Recently searched URL's, Downloads and Cookies from Firefox or InternetExplorer.
+    0 - Will display this menu.
+    98 - Will display info about the tool and team that implemented it.
+    99 - Will exit the tool.
+    
+
+
+
+    *************************** ABOUT THIS TOOL *******************************
+    
+    Xtractor is a post-mortem forensic tool implemented in python and designed to run on linux operating systems to examine Windows 7 images.
+    It will expect a file system image (dd image or vmdk image) as input and will extract certain data from the file system's windows registry, event log and other sources.
+    It was developed by a team of three young IT engineers as a subject of Ciber Security Forensic course.
+    2016 Instituto Superior Tecnico
+    

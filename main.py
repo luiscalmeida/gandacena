@@ -47,23 +47,23 @@ def menu():
 def help():
     print bcolors.BOLD + bcolors.ENDC + "\tHelp menu:\n"
     print "\t1 - Operating system's information as it's version, architecture, etc.."
-    print "\t2 - ESSID(name), IP and date of connections to any AP's stored in the system."
-    print "\t3 - Names and dates of connections of USB, external storage devices, input and output devices to the system."
+    print "\t2 - SSID(name),  and date of first and last connections to any AP's stored in the system."
+    print "\t3 - Names and Manufacturer of USB, external storage devices, input and output devices to the system."
     print "\t4 - Recently opened or modified files of any extension."
-    print "\t5 - Recently downloaded files from Chrome, Firefox or InternetExplorer."
+    print "\t5 - Recently downloaded files from Firefox, InternetExplorer, Skype or Outlook."
     print "\t6 - Recently executable programs executed on the system."
     print "\t7 - Information about the possible physical location where this system may have been used most of the time."
-    print "\t8 - Names of recently logged in or logged out users on the system."
-    print "\t9 - Recently searched URL's on Chrome, Firefox or InternetExplorer."
+    print "\t8 - Information about recently log ins or log outs on the system."
+    print "\t9 - Recently searched URL's, Downloads and Cookies from Firefox or InternetExplorer."
     print "\t0 - Will display this menu."
     print "\t98 - Will display info about the tool and team that implemented it."
     print "\t99 - Will exit the tool."
     print "\n"
 
 def about():
-    print bcolors.BOLD + bcolors.ENDC + "\txTractor is a post-mortem forensic tool implemented in python and designed to run on linux operating systems."
+    print bcolors.BOLD + bcolors.ENDC + "\txTractor is a post-mortem forensic tool implemented in python and designed to run on linux operating systems to examine Windows 7 images."
     print "\tIt will expect a file system image (dd image or vmdk image) as input and will extract certain data from the file system's windows registry, event log and other sources."
-    print "\tIt was develop by a team of three young IT engineers as a subject of Ciber Security Forensic course."
+    print "\tIt was developed by a team of three young IT engineers as a subject of Ciber Security Forensic course."
     print "\t2016 Instituto Superior Tecnico"
     print "\n"
 
@@ -194,7 +194,7 @@ def main():
 
 				#begin network history
 				reg = Registry.Registry(software)
-                                networkHistory_2.network_history(reg)
+
 
 				#begin cookies
 				physloc.cookies(user)

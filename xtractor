@@ -35,6 +35,7 @@ fi
 verbose=false
 
 umount mnt 2>/dev/null
+`fusermount -uz mnt 2>/dev/null`
 rm -r mnt 2>/dev/null
 mkdir ./mnt 2>/dev/null
 
@@ -138,10 +139,13 @@ then
 fi
 
 echo "File System mounted successfully"
-cd ./mnt/Windows/System32/config/
 if [ $verbose == true ];
 then
 	echo " "
 	echoi
 	echo `pwd`
 fi
+python ./main.py
+umount mnt 2>/dev/null
+`fusermount -uz mnt 2>/dev/null`
+rm -r mnt 2>/dev/nullls
