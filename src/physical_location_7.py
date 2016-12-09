@@ -1,7 +1,7 @@
 import sys,os
 import re
 import pickle
-from Registry import Registry
+from libs.Registry import Registry
 from os import listdir
 from os.path import isfile, join
 from string import *

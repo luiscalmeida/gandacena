@@ -4,10 +4,10 @@ import contextlib
 
 import argparse
 
-from Registry import Registry
+from libs.Registry import Registry
 
-from Evtx.Evtx import FileHeader
-from Evtx.Views import evtx_file_xml_view
+from libs.Evtx.Evtx import FileHeader
+from libs.Evtx.Views import evtx_file_xml_view
 
 #
 #------------Key Utils-----------------------
