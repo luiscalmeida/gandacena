@@ -185,8 +185,8 @@ def recent_browser_files(reg, user):
 	print("---------------------------------------")
 	print "Firefox:"
 	try:
-		random_dir = os.listdir(".mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles")
-		firefox_db.firefox_db_files(".mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles/" + random_dir[0] + "/places.sqlite")
+		random_dir = os.listdir("./mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles")
+		firefox_db.firefox_db_files("./mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles/" + random_dir[0] + "/places.sqlite")
 	except:
 		print "    " + fail + "No Mozilla Firefox installed"
 	try:

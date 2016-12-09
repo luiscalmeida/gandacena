@@ -74,7 +74,7 @@ def firefox_db_files(path):  # places.sqlite
 	index.append(0)
 	conn = sqlite3.connect(path)
 	c = conn.cursor()
-	contacts = c.execute("SELECT * FROM 'moz_annos'")
+	contacts = c.execute("SELECT * FROM moz_annos")
 	for row in c.fetchall():
 		if index[0] % 3 == 0:
 			if row[4].startswith("file"):
