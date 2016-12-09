@@ -61,8 +61,8 @@ def help():
     print "\n"
 
 def about():
-    print bcolors.BOLD + bcolors.ENDC + "\txTractor is a post-mortem forensic tool designed to run on linux operating systems."
-    print "\tIt will expect a file system image (dd image) as input and will extract certain data from the file system's windows registry and other sources."
+    print bcolors.BOLD + bcolors.ENDC + "\txTractor is a post-mortem forensic tool implemented in python and designed to run on linux operating systems."
+    print "\tIt will expect a file system image (dd image or vmdk image) as input and will extract certain data from the file system's windows registry, event log and other sources."
     print "\tIt was develop by a team of three young IT engineers as a subject of Ciber Security Forensic course."
     print "\t2016 Instituto Superior Tecnico"
     print "\n"
