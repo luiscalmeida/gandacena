@@ -1,16 +1,16 @@
 import sys
 import os
-from Registry import Registry
+from libs.Registry import Registry
 
-import systemInformation_1
-import networkHistory_2
-import usbDevices_3
-import recentFiles_4
-import downloadedFiles_5
-import launchedPrograms_6
-import physical_location_7 as physloc
-import account_usage_8 as accman
-import browser_usage_9 as browser
+from src import systemInformation_1
+from src import networkHistory_2
+from src import usbDevices_3
+from src import recentFiles_4
+from src import downloadedFiles_5
+from src import launchedPrograms_6
+from src import physical_location_7 as physloc
+from src import account_usage_8 as accman
+from src import browser_usage_9 as browser
 
 class bcolors:
     HEADER = '\033[95m'

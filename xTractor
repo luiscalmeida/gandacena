@@ -138,11 +138,10 @@ then
 fi
 
 echo "File System mounted successfully"
-cd mnt/Windows/System32/config/
+cd ./mnt/Windows/System32/config/
 if [ $verbose == true ];
 then
 	echo " "
-	echo "Now in path: "
+	echoi
 	echo `pwd`
 fi
-
