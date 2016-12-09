@@ -2,8 +2,8 @@
 
 if [[ $# == 0 ]] || [[ $# > 2 ]]; 
 then
-	echo "Usage: ./xTractor -dd [dd image]"; 
-	echo "Usage: ./xTractor -vmdk [vmdk image]"; 
+	echo "Usage: ./xtractor -dd [dd image]"; 
+	echo "Usage: ./xtractor -vmdk [vmdk image]"; 
 	echo " "
 	echo -e "\\tNote: If you have an error stating that 'Transport endpoint is not connected' please"
 	echo -e "\\trun 'fusermount -uz mnt', and then you can run the script"
@@ -17,8 +17,8 @@ if [[ $# == 1 ]];
 then
 	if [[ $1 == "-h" || $1 == "--help" ]];
 	then
-	echo "Usage: ./xTractor -dd [dd image]"; 
-	echo "Usage: ./xTractor -vmdk [vmdk image]"; 
+	echo "Usage: ./xtractor -dd [dd image]"; 
+	echo "Usage: ./xtractor -vmdk [vmdk image]"; 
 	echo " "
 	echo -e "\\tNote: If you have an error stating that 'Transport endpoint is not connected' please"
 	echo -e "\\trun 'fusermount -uz mnt', and then you can run the script"
@@ -27,7 +27,7 @@ then
 	echo -e "\\tand change 'verbose=false' to 'verbose=true' in line 35"
 	exit 1; 
 	else 
-		echo "Unknown usage. Type xTractor -h or --help for instructions"
+		echo "Unknown usage. Type xtractor -h or --help for instructions"
 		exit 1
 	fi
 fi
