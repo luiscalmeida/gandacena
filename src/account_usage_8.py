@@ -64,8 +64,13 @@ def show_logons(arg):
 	tagtype = "\"LogonType\">"
 	tagdata = "</Data>"
 	
-	l = open("./Output/LogonEvents.txt",'w')
+	l = open("./Output/LogonDetailedEvents.txt",'w')
 	
+	s_log_on = 0
+	f_log_on = 0
+	log_off = 0
+
+	all_events = []
     	with open(arg, 'r') as f:
         	with contextlib.closing(mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)) as buf:
         	    	fh = FileHeader(buf, 0x0)
@@ -75,6 +80,7 @@ def show_logons(arg):
 				ascxml = ascii(xml)
 				if ("4624" + tag) in ascxml:
 					evtype = ""
+					s_log_on += 1
 					if (tagtype + "2" + tagdata) in ascxml:
 						evtype = "Logon via console"
 					elif (tagtype + "3" + tagdata) in ascxml:
@@ -93,26 +99,40 @@ def show_logons(arg):
                                                 evtype = "Remove interactive logon"
 					elif (tagtype + "11" + tagdata) in ascxml:
                                                 evtype = "Cached credentials used to logon"
-					print(success + "Event ID - 4624 - Successful Logon - " + evtype)
+					all_events += ["Event ID - 4624 - Successful Logon - " + evtype]
+					#print(success + "Event ID - 4624 - Successful Logon - " + evtype)
 					l.write('\n' + "Event ID - 4624 - Successful Logon - " + evtype + '\n')
 					l.write("----------------------------------\n")
 					l.write(ascxml)
 					#print(ascxml) 
 				elif ("4625" + tag) in ascxml:
-					print(success + "Event ID - 4625 - Failed Logon")
+					f_log_on += 1
+					all_events += ["Event ID - 4625 - Failed Logon"]
+					#print(success + "Event ID - 4625 - Failed Logon")
 					l.write('\n' + "Event ID - 4625 - Failed Logon - " + '\n')
 					l.write("----------------------------------\n")
                                         l.write(ascxml)
 					#print(ascxml)
 				elif ("4634" + tag) in ascxml:
-					print(success + "Event ID - 4234 - Successful Logoff")
+					log_off += 1
+					all_events += ["Event ID - 4234 - Successful Logoff"]
+					#print(success + "Event ID - 4234 - Successful Logoff")
 					l.write('\n' + "Event ID - 4234 - Successful Logoff" + '\n')
 					l.write("----------------------------------\n")
                                         l.write(ascxml)
 					#print(ascxml)
 	l.write("</Events>")
-	print(bcolors.BOLD + "More detailed on file: Output/LogonEvents.txt")
+	print(success + "Event ID - 4624 - Successful Logon  - Found: " + str(s_log_on) + " events")
+	print(success + "Event ID - 4625 - Failed Logon      - Found: " + str(f_log_on) + " events")
+	print(success + "Event ID - 4634 - Successful Logoff - Found: " + str(log_off) + " events")
 	l.close()
+	f = open("./Output/LogonEvents.txt","w")
+	for e in all_events:
+		f.write(e + '\n')
+	f.close()
+        print(bcolors.BOLD + "List of events found on file: Output/LogonEvents.txt")
+        print(bcolors.BOLD + "More advanced information on file: Output/LogonDetailedEvents.txt")
+
 
 def show_logtimes(reg):
 
