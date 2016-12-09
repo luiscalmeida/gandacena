@@ -183,6 +183,7 @@ def main():
 				launchedPrograms_6.auto_run(reg)
 				print " "
 			elif command == 7:
+				#begin time zone
 				if not os.path.exists("./Output"):
 					os.makedirs("Output")
 				reg = Registry.Registry(system)
@@ -190,39 +191,56 @@ def main():
 				for e in res:
 					print(e)
 				print
-				#begin---network history
+
+				#begin network history
 				reg = Registry.Registry(software)
                                 networkHistory_2.network_history(reg)
+
 				#begin cookies
 				physloc.cookies(user)
 				print
+
 				#begin browser search
 				physloc.browser_search(user)
 				print
+				
+				#begin firefox history	
+				physloc.firefox_history(user)
+				print
 			elif command == 8:
+				#begin logons
 				if not os.path.exists("./Output"):
                                         os.makedirs("Output")
 				accman.show_logons(security_evt)
 				print
 				
+				#begin logs info
 				reg = Registry.Registry(sam)
 				accman.show_logtimes(reg)
 				print
 			elif command == 9:
+				#begin browser files
 				if not os.path.exists("./Output"):
                                         os.makedirs("Output")	
 				reg = Registry.Registry(ntuser)
 				recentFiles_4.recent_browser_files(reg, user)
 				
+				#begin downloaded files
 				downloadedFiles_5.downloads_IE(reg, user)
                                 downloadedFiles_5.downloads_FF(reg, user)
 				print
-				#browser.history()
+				
+				#begin browser history
 				physloc.browser_search(user)
 				print
-				#browser.cookies()
+				physloc.firefox_history(user)
+				print
+				
+				#begin cookies
 				physloc.cookies(user)
 				print
+
+				#begin keys
 				browser.keys(ntuser)
 				print
 			elif command == 98:

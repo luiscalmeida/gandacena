@@ -94,21 +94,18 @@ def show_logons(arg):
 					elif (tagtype + "11" + tagdata) in ascxml:
                                                 evtype = "Cached credentials used to logon"
 					print(success + "Event ID - 4624 - Successful Logon - " + evtype)
-					print("----------------------------------")
 					l.write('\n' + "Event ID - 4624 - Successful Logon - " + evtype + '\n')
 					l.write("----------------------------------\n")
 					l.write(ascxml)
 					#print(ascxml) 
 				elif ("4625" + tag) in ascxml:
 					print(success + "Event ID - 4625 - Failed Logon")
-                                        print("------------------------------")
 					l.write('\n' + "Event ID - 4625 - Failed Logon - " + '\n')
 					l.write("----------------------------------\n")
                                         l.write(ascxml)
 					#print(ascxml)
 				elif ("4634" + tag) in ascxml:
 					print(success + "Event ID - 4234 - Successful Logoff")
-                                        print("-----------------------------------")
 					l.write('\n' + "Event ID - 4234 - Successful Logoff" + '\n')
 					l.write("----------------------------------\n")
                                         l.write(ascxml)

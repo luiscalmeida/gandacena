@@ -118,6 +118,17 @@ def cookies(user):
 			print(fail + "Failed to retrieve Cookies on: " + path)
 	cookies.close()
 
+def firefox_history(user): 
+	print(bcolors.BOLD + ("=" * 24) + " FIREFOX HISTORY " + ("=" * 24))
+        print(bcolors.ENDC + "Searching in:")
+        print(plus + "./mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles/<random text>.default/places.sqlite")
+        print("---------------------------------------")
+        try:
+		random_dir = os.listdir("./mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles")
+                firefox_db.firefox_db_visited_urls("./mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles/" + random_dir[0] + "/places.sqlite")
+        except:
+                print fail + "No Mozilla\Firefox Directory"
+
 
 def removenonascii(s):
     	l=""
@@ -146,32 +157,45 @@ def browser_search(user):
 		
 	files1 = ""
 	res = []
+	websites = []
 
 	print(bcolors.BOLD + ("=" * 24) + " INTERNET EXPLORER HISTORY " + ("=" * 24))
-        print(bcolors.ENDC + "Searching in: ")
-	for path in paths:
-        	print(plus + path)
-        print("---------------------------------------")
-	
+
 	filesbool = 0
 
-	for filepath in paths:
+	pathscomplete = paths
+        print(bcolors.ENDC + "Searching in: ")
+	try:
+		for filepath in paths:
+			dirs = listdir(filepath)
+			for e in dirs:
+				if "MSHist" in e:
+					pathscomplete = pathscomplete + [filepath + e + "/"]
+	except: 
+		pass
+	
+	for path in pathscomplete:
+		print(plus+path)
+        print("---------------------------------------")
+	for filepath in pathscomplete:
 		try:
 			files1 = [f for f in listdir(filepath)]
 			if files1:
 				for e in files1:
 					if "index.dat" in e:
+						print(plus + filepath + e)
 						filesbool = 1
 						infile =open(filepath + e,"r")
+						arr = []
 						for line in infile:
- 							arr=line.split("Cho")
-							for s in arr:
-    								webs = removenonascii(s)
-								if webs:
-									for sites in webs:
-										print(plus + filepath + e)
-										print('\t' + success + sites)
-								res = res + [s]
+ 							arr= arr + line.split()
+						for s in arr:
+    							webs = removenonascii(s)
+							if webs:
+								for sites in webs:
+									websites = websites + [sites]
+									print('\t' + success + sites)
+							res = res + [s]
 						infile.close()
 			else:
 				print(fail + "Browser history not found on: " + filepath)
@@ -181,6 +205,7 @@ def browser_search(user):
 		print(fail + "Can't find browser search terms")	
 	else:
 		try:
+			res = websites + ["---------------------------"] + res
 			with open("./Output/BrowserSearch.txt", "w") as f:
 				pickle.dump(res,f)
 			print(bcolors.BOLD + "For more advanced info check: Output/BrowserSearch.txt")
