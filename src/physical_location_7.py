@@ -184,6 +184,7 @@ def browser_search(user):
 				for e in files1:
 					if "index.dat" in e:
 						print(plus + filepath + e)
+						websites = websites + [filepath + e]
 						filesbool = 1
 						infile =open(filepath + e,"r")
 						arr = []
@@ -192,11 +193,14 @@ def browser_search(user):
 						for s in arr:
     							webs = removenonascii(s)
 							if webs:
+								outputfound = 1
 								for sites in webs:
 									websites = websites + [sites]
-									print('\t' + success + sites)
+									#print('\t' + success + sites)
 							res = res + [s]
 						infile.close()
+						if outputfound:
+							print('\t' + success + "Output found")
 			else:
 				print(fail + "Browser history not found on: " + filepath)
 		except:
@@ -208,7 +212,7 @@ def browser_search(user):
 			res = websites + ["---------------------------"] + res
 			with open("./Output/BrowserSearch.txt", "w") as f:
 				pickle.dump(res,f)
-			print(bcolors.BOLD + "For more advanced info check: Output/BrowserSearch.txt")
+			print(bcolors.BOLD + "For the output or advanced info: Output/BrowserSearch.txt")
 			#outfile.close()
 		except:
-			print(fail + "Couldnt output advanced info to file")
+			print(fail + "Couldn't output info to file")
