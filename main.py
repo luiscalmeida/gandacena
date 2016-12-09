@@ -10,7 +10,7 @@ import downloadedFiles_5
 import launchedPrograms_6
 import physical_location_7 as physloc
 import account_usage_8 as accman
-
+import browser_usage_9 as browser
 
 class bcolors:
     HEADER = '\033[95m'
@@ -42,7 +42,7 @@ def menu():
     print "\t\t9 - Browser history"
     print "\t\t0 - Help"
     print "\t\t98 - About this tool"
-    print "\t\t99 - Exit\n"
+    print "\t\t99 - Exit"
 
 def help():
     print bcolors.BOLD + bcolors.ENDC + "\tHelp menu:\n"
@@ -121,6 +121,8 @@ def main():
 	software="./mnt/Windows/System32/config/SOFTWARE"
 	system="./mnt/Windows/System32/config/SYSTEM"
 	ntuser="./mnt/Users/" + user + "/NTUSER.DAT"
+	sam="./mnt/Windows/System32/config/SAM"
+	security_evt="./mnt/Windows/System32/winevt/Logs/Security.evtx"
 	while True:
 		menu()
 		prompt()
@@ -181,37 +183,48 @@ def main():
 				launchedPrograms_6.auto_run(reg)
 				print " "
 			elif command == 7:
-				#Need func to ask for user
-                #reg = Registry.Registry("./mnt/Users/admin11/NTUSER.DAT")
-                #begin---timezone
-				reg = Registry.Registry("./mnt/Windows/System32/config/SYSTEM")
-				res = physloc.timezone_settings("./mnt/Windows/System32/config/SYSTEM")
+				if not os.path.exists("./Output"):
+					os.makedirs("Output")
+				reg = Registry.Registry(system)
+				res = physloc.timezone_settings(system)
 				for e in res:
 					print(e)
+				print
 				#begin---network history
-				physloc.network_history(reg)
+				reg = Registry.Registry(software)
+                                networkHistory_2.network_history(reg)
 				#begin cookies
-				res = physloc.cookies(user)
-				if not res:
-					print("No Cookies found")
-				else:
-					print("Cookies in file: " + res)
+				physloc.cookies(user)
+				print
 				#begin browser search
 				physloc.browser_search(user)
-				if not res:
-					print("No History Found")
-				else:
-					for e in res:
-						print(res)
-				print " "
+				print
 			elif command == 8:
-				accman.show_logons("./mnt/Windows/System32/winevt/Logs/Security.evtx")
-
-				reg = Registry.Registry("./mnt/Windows/System32/config/SAM")
+				if not os.path.exists("./Output"):
+                                        os.makedirs("Output")
+				accman.show_logons(security_evt)
+				print
+				
+				reg = Registry.Registry(sam)
 				accman.show_logtimes(reg)
-				print " "
+				print
 			elif command == 9:
-				print " "
+				if not os.path.exists("./Output"):
+                                        os.makedirs("Output")	
+				reg = Registry.Registry(ntuser)
+				recentFiles_4.recent_browser_files(reg, user)
+				
+				downloadedFiles_5.downloads_IE(reg, user)
+                                downloadedFiles_5.downloads_FF(reg, user)
+				print
+				#browser.history()
+				physloc.browser_search(user)
+				print
+				#browser.cookies()
+				physloc.cookies(user)
+				print
+				browser.keys(ntuser)
+				print
 			elif command == 98:
 				print " "
 				about()
