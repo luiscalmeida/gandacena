@@ -124,11 +124,11 @@ def firefox_history(user):
 	print(bcolors.ENDC + "Searching in:")
 	print(plus + "./mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles/<random text>.default/places.sqlite")
 	print("---------------------------------------")
-    #try:
-	random_dir = os.listdir("./mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles")
-	firefox_db.firefox_db_visited_urls("./mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles/" + random_dir[0] + "/places.sqlite")
-    #except:
-     #       print fail + "No Mozilla\Firefox Directory"
+    	try:
+		random_dir = os.listdir("./mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles")
+		firefox_db.firefox_db_visited_urls("./mnt/Users/" + user + "/AppData/Roaming/Mozilla/Firefox/Profiles/" + random_dir[0] + "/places.sqlite")
+    	except:
+        	print(fail + "No Firefox Directory Found")
 
 
 def removenonascii(s):
